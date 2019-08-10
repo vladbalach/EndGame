@@ -1,14 +1,5 @@
 #ifndef HEADER_H
 #define HEADER_H
-
-typedef struct s_player {
-    int x;
-    int y;
-    int cloneX;
-    int cloneY;
-    int dx;
-    int dy;
-} t_player;
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -23,9 +14,25 @@ typedef struct s_player {
 #define DOWN 2
 #define LEFT 3
 #define RIGHT 4
+
+typedef struct s_player {
+    int x;
+    int y;
+    int cloneX;
+    int cloneY;
+    int dx;
+    int dy;
+} t_player;
+
 /*
 0 - border block
-1 - unvisible block */
-
+1 - unvisible block
+A - player 1
+B - player 2
+a - clone 1
+b - clone 2
+ */
+void mx_move(t_player* player);
+void checkMove(t_player *player, char* mass, int width);
 
 #endif

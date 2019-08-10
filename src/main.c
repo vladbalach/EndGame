@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include "header.h"
 
 
@@ -26,12 +21,20 @@ void drawPlayer(t_player *player, SDL_Rect *rect, SDL_Renderer *render) {
     rect->y = 10 * SIZE_OF_SYMBOL;
     SDL_RenderFillRect(render, rect);
 }
+
+void render() {
+
+}
 int main(int argc, char **argv)
 {
     char MAP[HEIGHT_SYMB][WIDTH_SYMB];
     t_player player1;
     player1.x = 10;
-    player1.y = 10; 
+    player1.y = HEIGHT_SYMB - 2; 
+    t_player player2;
+    player2.x = WIDTH_SYMB - 8;
+    player2.y = HEIGHT_SYMB - 2; 
+
     // Initialize SDL
     SDL_Init(SDL_INIT_VIDEO);
    
@@ -49,10 +52,16 @@ int main(int argc, char **argv)
     SDL_Event event;
     int x = 0;
     int dx = 6;
+    SDL_Rect rectPlayer1 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
+    SDL_Rect rectPlayer2 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     SDL_Rect rect = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     initMap(&MAP[0][0]);
     while(running)
     {
+        player1.dx = 0;
+        player1.dy = 0;
+        player2.dx = 0;
+        player2.dy = 0;
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
         SDL_SetRenderDrawColor(renderer, 255, 0, 0 , 255);
@@ -67,16 +76,16 @@ int main(int argc, char **argv)
             }
         }
         SDL_SetRenderDrawColor(renderer, 255, 255, 0 , 255);
-        drawPlayer(&player1, &rect, renderer);
-        while(SDL_PollEvent(&event))
-        {
-            if(event.type == SDL_QUIT)
-            {
+        drawPlayer(&player1, &rectPlayer1, renderer);
+        drawPlayer(&player2, &rectPlayer2, renderer);
+        while(SDL_PollEvent(&event)) {
+            if(event.type == SDL_QUIT) {
                 
                 running = false;
             }
-            if (event.type == SDL_KEYDOWN)
-	        {
+            if (event.type == SDL_KEYDOWN) {
+                player1.dy = -1;
+                mx_move(&player1);
                 //if (event.key.keysym.sym == SDLK_UP)
                     //if(checkMove(player1, mass))
 	        }
