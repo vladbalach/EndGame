@@ -1,3 +1,5 @@
 #include "header.h"
 
-void ()
+void checkMove(t_player *player, char* mass, int width) {
+
+}
