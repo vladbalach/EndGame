@@ -4,11 +4,15 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "header.h"
-#define SIZE_OF_SYMBOL 32
+#define SIZE_OF_SYMBOL 64
 #define HEIGHT_SYMB 40 // MAP SYMBOLS
 #define WIDTH_SYMB 60 
 #define WIDTH_PIX (WIDTH_SYMB * SIZE_OF_SYMBOL)
 #define HEIGHT_PIX (HEIGHT_SYMB * SIZE_OF_SYMBOL)
+#define UP 1
+#define DOWN 2
+#define LEFT 3
+#define RIGHT 4
 
 // Draw points with random colors and positions
 
@@ -76,12 +80,14 @@ int main(int argc, char **argv)
         {
             if(event.type == SDL_QUIT)
             {
+                
                 running = false;
             }
-            if(event.key.keysym.scancode != SDLK_ESCAPE)
-                printf("Physical %s key acting as %s key",
-                SDL_GetScancodeName(event.key.keysym.scancode),
-                SDL_GetKeyName(event.key.keysym.sym));
+            if (event.type == SDL_KEYDOWN)
+	        {
+                //if (event.key.keysym.sym == SDLK_UP)
+                    //if(checkMove(UP, player1, mass))
+	        }
         }
         SDL_RenderPresent(renderer);
     }
