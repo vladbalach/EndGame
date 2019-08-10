@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-
+#include "header.h"
 #define SIZE_OF_SYMBOL 32
 #define HEIGHT_SYMB 40 // MAP SYMBOLS
 #define WIDTH_SYMB 60 
@@ -11,12 +11,6 @@
 #define HEIGHT_PIX (HEIGHT_SYMB * SIZE_OF_SYMBOL)
 
 // Draw points with random colors and positions
-typedef struct s_player {
-    int x;
-    int y;
-    int cloneX;
-    int cloneY;
-} t_player;
 
 void initMap(char *mass) {
     for (int i = 0; i < HEIGHT_SYMB; i++) {
