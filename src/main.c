@@ -2,7 +2,9 @@
 
 
 // Draw points with random colors and positions
-
+// HEIGHT_SYMB - максимальная высота масива
+// WIDTH_SYMB - максимальная ширина масива
+// Сюда добавить единицы и нули
 void initMap(char *mass) {
     for (int i = 0; i < HEIGHT_SYMB; i++) {
         for (int j = 0; j < WIDTH_SYMB; j++) {
@@ -17,9 +19,12 @@ void initMap(char *mass) {
 }
 
 void drawPlayer(t_player *player, SDL_Rect *rect, SDL_Renderer *render) {
-    rect->x = 10 * SIZE_OF_SYMBOL;
-    rect->y = 10 * SIZE_OF_SYMBOL;
-    SDL_RenderFillRect(render, rect);
+    rect->x = player->x * SIZE_OF_SYMBOL;
+    rect->y = player->y * SIZE_OF_SYMBOL;
+    rect->w = SIZE_OF_SYMBOL * 3;
+    SDL_Texture *imgBorder = IMG_LoadTexture(render, player->pathToTexture);
+    SDL_RenderCopy(render, imgBorder, NULL, rect);
+    //SDL_RenderFillRect(render, rect);
 }
 
 void render() {
@@ -27,26 +32,31 @@ void render() {
 }
 int main(int argc, char **argv)
 {
+    //(SPI_SETKEYBOARDDELAY, 0, 0, 0)
+    //const Uint8 *state = SDL_GetKeyboardState(NULL);
     char MAP[HEIGHT_SYMB][WIDTH_SYMB];
     t_player player1;
     player1.x = 10;
     player1.y = HEIGHT_SYMB - 2; 
+    player1.pathToTexture = (char*) malloc (100);
+    player1.pathToTexture = "sprites/spaceStation_023.png";
     t_player player2;
     player2.x = WIDTH_SYMB - 8;
     player2.y = HEIGHT_SYMB - 2; 
-
+    player2.pathToTexture = (char*) malloc (100);
+    player2.pathToTexture = "sprites/spaceStation_018.png";
     // Initialize SDL
     SDL_Init(SDL_INIT_VIDEO);
    
     // Create a SDL window
     SDL_Window *window = 
     SDL_CreateWindow("Hello, SDL2", 
-        SDL_WINDOWPOS_UNDEFINED, 
-        SDL_WINDOWPOS_UNDEFINED, WIDTH_PIX, HEIGHT_PIX, 
-        SDL_WINDOW_OPENGL);
+    SDL_WINDOWPOS_UNDEFINED, 
+    SDL_WINDOWPOS_UNDEFINED, WIDTH_PIX, HEIGHT_PIX, 
+    SDL_WINDOW_OPENGL);
     // Create a renderer (accelerated and in sync with the display refresh rate)
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
-        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     SDL_Texture *imgBorder = IMG_LoadTexture(renderer, "imgs/1.png");
     bool running = true;
     SDL_Event event;
@@ -58,6 +68,7 @@ int main(int argc, char **argv)
     initMap(&MAP[0][0]);
     while(running)
     {
+       // state = SDL_GetKeyboardState(NULL);
         player1.dx = 0;
         player1.dy = 0;
         player2.dx = 0;
@@ -76,20 +87,77 @@ int main(int argc, char **argv)
             }
         }
         SDL_SetRenderDrawColor(renderer, 255, 255, 0 , 255);
-        drawPlayer(&player1, &rectPlayer1, renderer);
-        drawPlayer(&player2, &rectPlayer2, renderer);
+        //if (state[SDL_SCANCODE_RIGHT]) {
+        //        player1.dx = 1;;
+        //   }
+        // ОБРАБОТКА СИМВОЛОВ 
+        // ТУТ ТРЕТИЙ ТАСК
         while(SDL_PollEvent(&event)) {
+            if(event.key.keysym.sym == SDLK_w) {
+                player1.dy = 1;
+            }
+            if(event.key.keysym.sym == SDLK_a) {
+                player1.dx = -1;
+            }
+            if(event.key.keysym.sym == SDLK_s) {
+                player1.dy = -1;
+            }
+            if(event.key.keysym.sym == SDLK_d) {
+                player1.dx = 1;
+            }
+            if(event.key.keysym.sym == SDLK_i) {
+                player2.dy = 1;
+            }
+            if(event.key.keysym.sym == SDLK_l) {
+                player2.dx = 1;
+            }
+            if(event.key.keysym.sym == SDLK_k) {
+                player2.dy = -1;
+            }
+            if(event.key.keysym.sym == SDLK_j) {
+                player2.dx = -1;
+            }
             if(event.type == SDL_QUIT) {
                 
                 running = false;
             }
-            if (event.type == SDL_KEYDOWN) {
-                player1.dy = -1;
-                mx_move(&player1);
-                //if (event.key.keysym.sym == SDLK_UP)
-                    //if(checkMove(player1, mass))
+            /*if (event.type == SDL_KEYDOWN) {
+               player1.dx = 1;
+               mx_move(&player1);
+               switch( event.key.keysym.sym )
+                        {
+                            case SDLK_UP: player1.dy = 1; break;
+                            case SDLK_DOWN: player1.dy = -1; break;
+                            case SDLK_LEFT: player1.dx = -1; break;
+                            case SDLK_RIGHT: player1.dx = 1; break;
+                            default: player1.x = 10; break;
+                        }
+             //   if (event.key.keysym.sym == SDLK_UP)
+            //        if(checkMove(player1, mass))
 	        }
-        }
+            if (event.type == SDLK_x) {
+               player1.dx = +1;
+              
+            }
+            /*if( event.type == SDL_KEYDOWN ) {
+                switch( event.key.keysym.sym )
+                        {
+                            case SDLK_UP: player1.dy = 1; break;
+                            case SDLK_DOWN: player1.dy = -1; break;
+                            case SDLK_LEFT: player1.dx = -1; break;
+                            case SDLK_RIGHT: player1.dx = 1; break;
+                            default: player1.dx = 10; break;
+                        }
+                        player1.dy = 1;
+                }*/
+    }
+
+        mx_move(&player1);
+        mx_move(&player2);
+        drawPlayer(&player1, &rectPlayer1, renderer);
+        drawPlayer(&player2, &rectPlayer2, renderer);
+       
+
         SDL_RenderPresent(renderer);
     }
     // Release resources

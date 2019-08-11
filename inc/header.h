@@ -22,6 +22,7 @@ typedef struct s_player {
     int cloneY;
     int dx;
     int dy;
+    char *pathToTexture;
 } t_player;
 
 /*
