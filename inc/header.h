@@ -23,6 +23,8 @@ typedef struct s_player {
     int cloneY;
     int dx;
     int dy;
+    char ch;
+    char chClone;
     char *pathToTexture;
 } t_player;
 
@@ -34,9 +36,9 @@ B - player 2
 a - clone 1
 b - clone 2
  */
-void mx_move(t_player* player);
+void mx_move(t_player* player, char *MAP);
 void checkMove(t_player *player, char* mass, int width);
-void redrawMap(SDL_Rect *rect, SDL_Renderer *render, char* MAP);
-void drawMap(SDL_Rect *rect, SDL_Renderer *render, char* MAP);
+void redrawMap(SDL_Renderer *render, char* MAP);
+void drawMap( SDL_Renderer *render, char* MAP);
 
 #endif

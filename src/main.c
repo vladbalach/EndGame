@@ -21,14 +21,15 @@ void initMap(char *mass) {
     }
 }
 
-void drawPlayer(t_player *player, SDL_Rect *rect, SDL_Renderer *render) {
+void drawPlayer(t_player *player, SDL_Renderer *render) {
     //
-    SDL_Texture *imgBorder2 = IMG_LoadTexture(render, "sprites/environment_02.png");
-    rect->x = player->x * SIZE_OF_SYMBOL;
-    rect->y = player->y * SIZE_OF_SYMBOL;
-    rect->w = SIZE_OF_SYMBOL * 3;
+    SDL_Rect rect = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     SDL_Texture *imgBorder = IMG_LoadTexture(render, player->pathToTexture);
-    SDL_RenderCopy(render, imgBorder, NULL, rect);
+    rect.x = (player->x-1) * SIZE_OF_SYMBOL;
+    rect.y = player->y * SIZE_OF_SYMBOL;
+    rect.w = SIZE_OF_SYMBOL * 3;
+    
+    SDL_RenderCopy(render, imgBorder, NULL, &rect);
     //SDL_RenderFillRect(render, rect);
 }
 
@@ -39,10 +40,14 @@ int main(int argc, char **argv)
     char MAP[HEIGHT_SYMB][WIDTH_SYMB];
     t_player player1;
     player1.x = 2;
-    player1.y = 0; 
+    player1.y = 2 ; 
+    player1.ch = 'A';
+    player1.chClone = 'a'; 
     player1.pathToTexture = (char*) malloc (100);
     player1.pathToTexture = "sprites/spaceStation_023.png";
     t_player player2;
+    player2.ch = 'B';
+    player2.chClone = 'b';
     player2.x = WIDTH_SYMB - 8;
     player2.y = HEIGHT_SYMB - 2; 
     player2.pathToTexture = (char*) malloc (100);
@@ -57,6 +62,7 @@ int main(int argc, char **argv)
     SDL_WINDOWPOS_UNDEFINED, 
     SDL_WINDOWPOS_UNDEFINED, WIDTH_PIX, HEIGHT_PIX, 
     SDL_WINDOW_OPENGL);
+    
     // Create a renderer (accelerated and in sync with the display refresh rate)
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -67,9 +73,10 @@ int main(int argc, char **argv)
     SDL_Rect rectPlayer2 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     SDL_Rect rect = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     initMap(&MAP[0][0]);
-    drawMap(&rect, renderer, &MAP[0][0]);
+    //drawMap(&rect, renderer, &MAP[0][0]);
     while(running)
     {
+        
        // state = SDL_GetKeyboardState(NULL);
         player1.dx = 0;
         player1.dy = 0;
@@ -78,7 +85,7 @@ int main(int argc, char **argv)
         //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
        // SDL_SetRenderDrawColor(renderer, 255, 0, 0 , 255);
-        redrawMap(&rect, renderer, &MAP[0][0]);
+        
        // SDL_SetRenderDrawColor(renderer, 255, 255, 0 , 255);
         //if (state[SDL_SCANCODE_RIGHT]) {
         //        player1.dx = 1;;
@@ -114,43 +121,15 @@ int main(int argc, char **argv)
                 
                 running = false;
             }
-            /*if (event.type == SDL_KEYDOWN) {
-               player1.dx = 1;
-               mx_move(&player1);
-               switch( event.key.keysym.sym )
-                        {
-                            case SDLK_UP: player1.dy = 1; break;
-                            case SDLK_DOWN: player1.dy = -1; break;
-                            case SDLK_LEFT: player1.dx = -1; break;
-                            case SDLK_RIGHT: player1.dx = 1; break;
-                            default: player1.x = 10; break;
-                        }
-             //   if (event.key.keysym.sym == SDLK_UP)
-            //        if(checkMove(player1, mass))
-	        }
-            if (event.type == SDLK_x) {
-               player1.dx = +1;
-              
-            }
-            if( event.type == SDL_KEYDOWN ) {
-                switch( event.key.keysym.sym )
-                        {
-                            case SDLK_UP: player1.dy = 1; break;
-                            case SDLK_DOWN: player1.dy = -1; break;
-                            case SDLK_LEFT: player1.dx = -1; break;
-                            case SDLK_RIGHT: player1.dx = 1; break;
-                            default: player1.dx = 10; break;
-                        }
-                        player1.dy = 1;
-                }*/
+            
+
     }
-
-        mx_move(&player1);
-        mx_move(&player2);
-        drawPlayer(&player1, &rectPlayer1, renderer);
-        drawPlayer(&player2, &rectPlayer2, renderer);
-        usleep(1000);
-
+    mx_move(&player1, &MAP[0][0]);
+            mx_move(&player2, &MAP[0][0]);
+            drawPlayer(&player1, renderer);
+            drawPlayer(&player2, renderer);
+            redrawMap(renderer, &MAP[0][0]);
+        usleep(10000);
         SDL_RenderPresent(renderer);
     }
     // Release resources
