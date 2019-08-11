@@ -18,24 +18,27 @@
 #define RIGHT 4
 
 typedef struct s_player {
-    int x;
-    int y;
-    int cloneX;
-    int cloneY;
-    int dx;
-    int dy;
+    float x;
+    float y;
+    float cloneX;
+    float cloneY;
+    float dx;
+    float dy;
     char ch;
     char chClone;
+    float bulletSpeed; // Скорость снаряда
+    int coolDown; //gthезарядка
     char *pathToTexture;
 } t_player;
 
 typedef struct s_bullet {
-    int x;
-    int y;
-    int dx;
-    int dy;
-    int cloneX;
-    int cloneY;
+    float x;
+    float y;
+    float dx;
+    float dy;
+    float cloneX;
+    float cloneY;
+
     struct s_bullet *next;
 } t_bullet;
 /*
@@ -52,8 +55,8 @@ void redrawMap(SDL_Renderer *render, char* MAP);
 void drawMap( SDL_Renderer *render, char* MAP);
 
 //BULLETS
-t_bullet *createBullet(int x, int y, int dx, int dy, char *MAP);
-void mx_push_front(t_bullet **list, int x, int y, int dx,int dy, char *MAP) ;
+t_bullet *createBullet(float x, float y, float dx, float dy, char *MAP);
+void mx_push_front(t_bullet **list, float x, float y, float dx,float dy, char *MAP) ;
 int moveBullet(t_bullet **bullet, char *MAP);
 void mx_pop_back(t_bullet **list);
 void mx_pop_index(t_bullet **list, int index);

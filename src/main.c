@@ -48,11 +48,15 @@ int main(int argc, char **argv)
     player1.x = WIDTH_SYMB/4 - 1;
     player1.y =  HEIGHT_SYMB - 2;
     player1.cloneY = 1;
+    player1.bulletSpeed = 0.35;
     player1.ch = 'A';
-    player1.chClone = 'a'; 
+    player1.chClone = 'a';
+    player1.coolDown = 350000; 
     player1.pathToTexture = (char*) malloc (100);
     player1.pathToTexture = "sprites/spaceStation_023.png";
     t_player player2;
+    player2.bulletSpeed = 0.35;
+    player2.coolDown = 350000;
     player2.ch = 'B';
     player2.chClone = 'b';
     player2.x = WIDTH_SYMB / 4 * 3 - 1 ;
@@ -67,6 +71,7 @@ int main(int argc, char **argv)
     startTime = clock();
     cd1 = clock();
     cd2 = clock();
+    int GAME_STATUS = 0;//
     t_bullet *listBullet = 0;
     // Initialize SDL
     SDL_Init(SDL_INIT_VIDEO);
@@ -98,7 +103,17 @@ SDL_Texture *imgB = IMG_LoadTexture(renderer, "imgs/zori.png");
         player1.dy = 0;
         player2.dx = 0;
         player2.dy = 0;
-        moveBullet(&listBullet,&MAP[0][0]);
+        GAME_STATUS = moveBullet(&listBullet,&MAP[0][0]);
+        if(GAME_STATUS == -1) {
+            printf("First lose");
+            exit(1);
+
+        }
+        if(GAME_STATUS == 1) {
+            printf("Second lose");
+            exit(1);
+            
+        }
         //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
         SDL_Rect rect3 = {0, 0, WIDTH_SYMB * SIZE_OF_SYMBOL, HEIGHT_SYMB * SIZE_OF_SYMBOL};
@@ -107,17 +122,17 @@ SDL_Texture *imgB = IMG_LoadTexture(renderer, "imgs/zori.png");
         // ТУТ ТРЕТИЙ ТАСК
         while(SDL_PollEvent(&event)) {
             if (event.type == SDL_KEYUP) {
-                if((event.key.keysym.sym == SDLK_SPACE) && (clock() > cd1 + 100000)) {
+                if((event.key.keysym.sym == SDLK_SPACE) && (clock() > cd1 + player1.coolDown)) {
                     cd1 = clock();
-                    mx_push_front(&listBullet, player1.x, player1.y, 0, -1, &MAP[0][0]);
-                    mx_push_front(&listBullet, player1.cloneX, player1.cloneY, 0, 1, &MAP[0][0]);
+                    mx_push_front(&listBullet, player1.x, player1.y, 0, -player1.bulletSpeed, &MAP[0][0]);
+                    mx_push_front(&listBullet, player1.cloneX, player1.cloneY, 0, player1.bulletSpeed, &MAP[0][0]);
                     break;
                 }
                 
-                if((event.key.keysym.sym == SDLK_RSHIFT)&& (clock() > cd2 + 100000)) {
+                if((event.key.keysym.sym == SDLK_RSHIFT)&& (clock() > cd2 + player2.coolDown)) {
                     cd2 = clock();
-                    mx_push_front(&listBullet, player2.x, player2.y, 0, -1, &MAP[0][0]);
-                    mx_push_front(&listBullet, player2.cloneX, player2.cloneY, 0, 1, &MAP[0][0]);
+                    mx_push_front(&listBullet, player2.x, player2.y, 0, -player2.bulletSpeed, &MAP[0][0]);
+                    mx_push_front(&listBullet, player2.cloneX, player2.cloneY, 0, player2.bulletSpeed, &MAP[0][0]);
                     break;
                 }
                 if(event.key.keysym.sym == SDLK_w) {
@@ -158,7 +173,7 @@ SDL_Texture *imgB = IMG_LoadTexture(renderer, "imgs/zori.png");
         drawPlayer(&player1, renderer);
         drawPlayer(&player2, renderer);
         redrawMap(renderer, &MAP[0][0]);
-         usleep(40000);
+        usleep(10000);
         SDL_RenderPresent(renderer);
     }
     // Release resources
