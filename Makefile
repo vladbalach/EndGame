@@ -7,12 +7,14 @@ HEADTMP = header.h
 SRCS = ./src/main.c \
 	./src/mx_move.c \
 	./src/checkMove.c \
-	./src/redrawMap.c
+	./src/redrawMap.c \
+	./src/drawMap.c
 
 CTMP = 	main.c \
 	mx_move.c \
 	checkMove.c \
-	redrawMap.c
+	redrawMap.c \
+	drawMap.c
 
 CFLSGS = -std=c11 -Wall -Wextra -Wpedantic -Werror
 

@@ -2,6 +2,7 @@
 #define HEADER_H
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h> 
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -36,5 +37,6 @@ b - clone 2
 void mx_move(t_player* player);
 void checkMove(t_player *player, char* mass, int width);
 void redrawMap(SDL_Rect *rect, SDL_Renderer *render, char* MAP);
+void drawMap(SDL_Rect *rect, SDL_Renderer *render, char* MAP);
 
 #endif

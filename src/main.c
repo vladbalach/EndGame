@@ -67,6 +67,7 @@ int main(int argc, char **argv)
     SDL_Rect rectPlayer2 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     SDL_Rect rect = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     initMap(&MAP[0][0]);
+    drawMap(&rect, renderer, &MAP[0][0]);
     while(running)
     {
        // state = SDL_GetKeyboardState(NULL);
@@ -148,7 +149,7 @@ int main(int argc, char **argv)
         mx_move(&player2);
         drawPlayer(&player1, &rectPlayer1, renderer);
         drawPlayer(&player2, &rectPlayer2, renderer);
-       
+        usleep(1000);
 
         SDL_RenderPresent(renderer);
     }
