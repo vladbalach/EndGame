@@ -22,6 +22,8 @@ void initMap(char *mass) {
 }
 
 void drawPlayer(t_player *player, SDL_Rect *rect, SDL_Renderer *render) {
+    //
+    SDL_Texture *imgBorder2 = IMG_LoadTexture(render, "sprites/environment_02.png");
     rect->x = player->x * SIZE_OF_SYMBOL;
     rect->y = player->y * SIZE_OF_SYMBOL;
     rect->w = SIZE_OF_SYMBOL * 3;
@@ -30,9 +32,6 @@ void drawPlayer(t_player *player, SDL_Rect *rect, SDL_Renderer *render) {
     //SDL_RenderFillRect(render, rect);
 }
 
-void render() {
-
-}
 int main(int argc, char **argv)
 {
     //(SPI_SETKEYBOARDDELAY, 0, 0, 0)
@@ -50,7 +49,8 @@ int main(int argc, char **argv)
     player2.pathToTexture = "sprites/spaceStation_018.png";
     // Initialize SDL
     SDL_Init(SDL_INIT_VIDEO);
-   
+   //SDL_Texture *imgBorder = IMG_LoadTexture(renderer, "imgs/1.png");
+    //SDL_Texture *imgBorder2 = IMG_LoadTexture(renderer, "sprites/environment_02.png");
     // Create a SDL window
     SDL_Window *window = 
     SDL_CreateWindow("Hello, SDL2", 
@@ -60,12 +60,9 @@ int main(int argc, char **argv)
     // Create a renderer (accelerated and in sync with the display refresh rate)
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    SDL_Texture *imgBorder = IMG_LoadTexture(renderer, "imgs/1.png");
-    SDL_Texture *imgBorder2 = IMG_LoadTexture(renderer, "sprites/environment_02.png");
+
     bool running = true;
     SDL_Event event;
-    //int x = 0;
-    //int dx = 6;
     SDL_Rect rectPlayer1 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     SDL_Rect rectPlayer2 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     SDL_Rect rect = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
@@ -80,22 +77,7 @@ int main(int argc, char **argv)
         //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
        // SDL_SetRenderDrawColor(renderer, 255, 0, 0 , 255);
-        for (int i = 0; i < HEIGHT_SYMB; i++){
-            for (int j = 0; j < WIDTH_SYMB; j++) {
-                if (MAP[i][j] == '0') {
-                    rect.x = j * SIZE_OF_SYMBOL;
-                    rect.y = i * SIZE_OF_SYMBOL;
-                    SDL_RenderCopy(renderer, imgBorder, NULL, &rect);
-                    //SDL_RenderFillRect(renderer, &rect);
-                }
-                else if (MAP[i][j] == '1') {
-                    rect.x = j * SIZE_OF_SYMBOL;
-                    rect.y = i * SIZE_OF_SYMBOL;
-                    SDL_RenderCopy(renderer, imgBorder2, NULL, &rect);
-                    //SDL_RenderFillRect(renderer, &rect);
-                }
-            }
-        }
+        redrawMap(&rect, renderer, &MAP[0][0]);
        // SDL_SetRenderDrawColor(renderer, 255, 255, 0 , 255);
         //if (state[SDL_SCANCODE_RIGHT]) {
         //        player1.dx = 1;;
