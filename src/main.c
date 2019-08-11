@@ -45,9 +45,8 @@ int main(int argc, char **argv)
     //const Uint8 *state = SDL_GetKeyboardState(NULL);
     char MAP[HEIGHT_SYMB][WIDTH_SYMB];
     t_player player1;
-    player1.x = WIDTH_SYMB/4;
+    player1.x = WIDTH_SYMB/4 - 1;
     player1.y =  HEIGHT_SYMB - 2;
-    player1.cloneX = WIDTH_SYMB/4*3 + 1;
     player1.cloneY = 1;
     player1.ch = 'A';
     player1.chClone = 'a'; 
@@ -56,12 +55,18 @@ int main(int argc, char **argv)
     t_player player2;
     player2.ch = 'B';
     player2.chClone = 'b';
-    player2.x = WIDTH_SYMB / 4 * 3 + 1;
+    player2.x = WIDTH_SYMB / 4 * 3 - 1 ;
     player2.y = HEIGHT_SYMB - 2; 
-    player2.cloneX = WIDTH_SYMB / 4;
+    
     player2.cloneY = 1;
     player2.pathToTexture = (char*) malloc (100);
     player2.pathToTexture = "sprites/spaceStation_018.png";
+    player1.cloneX = player2.x+1;
+    player2.cloneX = player1.x+1;
+    clock_t startTime, cd1, cd2;
+    startTime = clock();
+    cd1 = clock();
+    cd2 = clock();
     t_bullet *listBullet = 0;
     // Initialize SDL
     SDL_Init(SDL_INIT_VIDEO);
@@ -87,7 +92,7 @@ SDL_Texture *imgB = IMG_LoadTexture(renderer, "imgs/zori.png");
     //drawMap(&rect, renderer, &MAP[0][0]);
     while(running)
     {
-        
+        printf("time = %lu\n",cd1);
        // state = SDL_GetKeyboardState(NULL);
         player1.dx = 0;
         player1.dy = 0;
@@ -98,45 +103,43 @@ SDL_Texture *imgB = IMG_LoadTexture(renderer, "imgs/zori.png");
         SDL_RenderClear(renderer);
         SDL_Rect rect3 = {0, 0, WIDTH_SYMB * SIZE_OF_SYMBOL, HEIGHT_SYMB * SIZE_OF_SYMBOL};
         SDL_RenderCopy(renderer, imgB, NULL, &rect3);
-       // SDL_SetRenderDrawColor(renderer, 255, 0, 0 , 255);
-        
-       // SDL_SetRenderDrawColor(renderer, 255, 255, 0 , 255);
-        //if (state[SDL_SCANCODE_RIGHT]) {
-        //        player1.dx = 1;;
-        //   }
         // ОБРАБОТКА СИМВОЛОВ 
         // ТУТ ТРЕТИЙ ТАСК
         while(SDL_PollEvent(&event)) {
             if (event.type == SDL_KEYUP) {
-                if(event.key.keysym.sym == SDLK_SPACE) {
+                if((event.key.keysym.sym == SDLK_SPACE) && (clock() > cd1 + 100000)) {
+                    cd1 = clock();
                     mx_push_front(&listBullet, player1.x, player1.y, 0, -1, &MAP[0][0]);
+                    mx_push_front(&listBullet, player1.cloneX, player1.cloneY, 0, 1, &MAP[0][0]);
                     break;
                 }
                 
-                if(event.key.keysym.sym == SDLK_RSHIFT) {
+                if((event.key.keysym.sym == SDLK_RSHIFT)&& (clock() > cd2 + 100000)) {
+                    cd2 = clock();
                     mx_push_front(&listBullet, player2.x, player2.y, 0, -1, &MAP[0][0]);
+                    mx_push_front(&listBullet, player2.cloneX, player2.cloneY, 0, 1, &MAP[0][0]);
                     break;
                 }
                 if(event.key.keysym.sym == SDLK_w) {
-                    player1.dy = 1;
+                    player1.dy = -1;
                 }
                 if(event.key.keysym.sym == SDLK_a) {
                     player1.dx = -1;
                 }
                 if(event.key.keysym.sym == SDLK_s) {
-                    player1.dy = -1;
+                    player1.dy = 1;
                 }
                 if(event.key.keysym.sym == SDLK_d) {
                     player1.dx = 1;
                 }
                 if(event.key.keysym.sym == SDLK_UP) {
-                    player2.dy = 1;
+                    player2.dy = -1;
                 }
                 if(event.key.keysym.sym == SDLK_RIGHT) {
                     player2.dx = 1;
                 }
                 if(event.key.keysym.sym == SDLK_DOWN) {
-                    player2.dy = -1;
+                    player2.dy = 1;
                 }
                 if(event.key.keysym.sym == SDLK_LEFT) {
                     player2.dx = -1;

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h> 
 #include <stdbool.h>
+#include <time.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #define SIZE_OF_SYMBOL 32
@@ -53,7 +54,7 @@ void drawMap( SDL_Renderer *render, char* MAP);
 //BULLETS
 t_bullet *createBullet(int x, int y, int dx, int dy, char *MAP);
 void mx_push_front(t_bullet **list, int x, int y, int dx,int dy, char *MAP) ;
-void moveBullet(t_bullet **bullet, char *MAP);
+int moveBullet(t_bullet **bullet, char *MAP);
 void mx_pop_back(t_bullet **list);
 void mx_pop_index(t_bullet **list, int index);
 void mx_pop_front(t_bullet **list);
