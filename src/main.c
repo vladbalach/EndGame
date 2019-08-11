@@ -62,7 +62,7 @@ int main(int argc, char **argv)
     player2.cloneY = 1;
     player2.pathToTexture = (char*) malloc (100);
     player2.pathToTexture = "sprites/spaceStation_018.png";
-
+    t_bullet *listBullet = 0;
     // Initialize SDL
     SDL_Init(SDL_INIT_VIDEO);
    //SDL_Texture *imgBorder = IMG_LoadTexture(renderer, "imgs/1.png");
@@ -93,6 +93,7 @@ SDL_Texture *imgB = IMG_LoadTexture(renderer, "imgs/zori.png");
         player1.dy = 0;
         player2.dx = 0;
         player2.dy = 0;
+        moveBullet(&listBullet,&MAP[0][0]);
         //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
         SDL_Rect rect3 = {0, 0, WIDTH_SYMB * SIZE_OF_SYMBOL, HEIGHT_SYMB * SIZE_OF_SYMBOL};
@@ -107,6 +108,15 @@ SDL_Texture *imgB = IMG_LoadTexture(renderer, "imgs/zori.png");
         // ТУТ ТРЕТИЙ ТАСК
         while(SDL_PollEvent(&event)) {
             if (event.type == SDL_KEYUP) {
+                if(event.key.keysym.sym == SDLK_SPACE) {
+                    mx_push_front(&listBullet, player1.x, player1.y, 0, -1, &MAP[0][0]);
+                    break;
+                }
+                
+                if(event.key.keysym.sym == SDLK_RSHIFT) {
+                    mx_push_front(&listBullet, player2.x, player2.y, 0, -1, &MAP[0][0]);
+                    break;
+                }
                 if(event.key.keysym.sym == SDLK_w) {
                     player1.dy = 1;
                 }
@@ -145,7 +155,7 @@ SDL_Texture *imgB = IMG_LoadTexture(renderer, "imgs/zori.png");
         drawPlayer(&player1, renderer);
         drawPlayer(&player2, renderer);
         redrawMap(renderer, &MAP[0][0]);
-        usleep(10000);
+         usleep(40000);
         SDL_RenderPresent(renderer);
     }
     // Release resources

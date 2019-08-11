@@ -8,13 +8,25 @@ SRCS = ./src/main.c \
 	./src/mx_move.c \
 	./src/checkMove.c \
 	./src/redrawMap.c \
-	./src/drawMap.c
+	./src/drawMap.c \
+	./src/mx_push_front.c \
+	./src/moveBullet.c \
+	./src/createBullet.c \
+	./src/mx_pop_index.c \
+	./src/mx_pop_front.c \
+	./src/mx_pop_back.c
 
 CTMP = 	main.c \
 	mx_move.c \
 	checkMove.c \
 	redrawMap.c \
-	drawMap.c
+	drawMap.c \
+	mx_push_front.c \
+	moveBullet.c \
+	createBullet.c \
+	mx_pop_index.c \
+	mx_pop_front.c \
+	mx_pop_back.c
 
 CFLSGS = -std=c11 -Wall -Wextra -Wpedantic -Werror
 

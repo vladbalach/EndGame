@@ -8,7 +8,7 @@
 #include <SDL2/SDL_image.h>
 #define SIZE_OF_SYMBOL 32
 #define HEIGHT_SYMB 39 // MAP SYMBOLS
-#define WIDTH_SYMB 62 
+#define WIDTH_SYMB 60 
 #define WIDTH_PIX (WIDTH_SYMB * SIZE_OF_SYMBOL)
 #define HEIGHT_PIX (HEIGHT_SYMB * SIZE_OF_SYMBOL)
 #define UP 1
@@ -28,6 +28,15 @@ typedef struct s_player {
     char *pathToTexture;
 } t_player;
 
+typedef struct s_bullet {
+    int x;
+    int y;
+    int dx;
+    int dy;
+    int cloneX;
+    int cloneY;
+    struct s_bullet *next;
+} t_bullet;
 /*
 0 - border block
 1 - unvisible block
@@ -41,4 +50,11 @@ void checkMove(t_player *player, char* mass, int width);
 void redrawMap(SDL_Renderer *render, char* MAP);
 void drawMap( SDL_Renderer *render, char* MAP);
 
+//BULLETS
+t_bullet *createBullet(int x, int y, int dx, int dy, char *MAP);
+void mx_push_front(t_bullet **list, int x, int y, int dx,int dy, char *MAP) ;
+void moveBullet(t_bullet **bullet, char *MAP);
+void mx_pop_back(t_bullet **list);
+void mx_pop_index(t_bullet **list, int index);
+void mx_pop_front(t_bullet **list);
 #endif
