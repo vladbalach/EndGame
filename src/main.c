@@ -25,12 +25,18 @@ void drawPlayer(t_player *player, SDL_Renderer *render) {
     //
     SDL_Rect rect = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     SDL_Texture *imgBorder = IMG_LoadTexture(render, player->pathToTexture);
-    rect.x = (player->x-1) * SIZE_OF_SYMBOL;
+    rect.x = (player->x - 1)* SIZE_OF_SYMBOL;
     rect.y = player->y * SIZE_OF_SYMBOL;
     rect.w = SIZE_OF_SYMBOL * 3;
     
     SDL_RenderCopy(render, imgBorder, NULL, &rect);
-    //SDL_RenderFillRect(render, rect);
+    
+    SDL_Rect rect2 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
+    SDL_Texture *imgBorder2 = IMG_LoadTexture(render, player->pathToTexture);
+    rect2.x = (player->cloneX - 1) * SIZE_OF_SYMBOL;
+    rect2.y = player->cloneY * SIZE_OF_SYMBOL;
+    rect2.w = SIZE_OF_SYMBOL * 3;
+    SDL_RenderCopy(render, imgBorder2, NULL, &rect2);//SDL_RenderFillRect(render, rect);
 }
 
 int main(int argc, char **argv)
@@ -39,8 +45,10 @@ int main(int argc, char **argv)
     //const Uint8 *state = SDL_GetKeyboardState(NULL);
     char MAP[HEIGHT_SYMB][WIDTH_SYMB];
     t_player player1;
-    player1.x = 2;
-    player1.y = 2 ; 
+    player1.x = WIDTH_SYMB/4;
+    player1.y =  HEIGHT_SYMB - 2;
+    player1.cloneX = WIDTH_SYMB/4*3 + 1;
+    player1.cloneY = 1;
     player1.ch = 'A';
     player1.chClone = 'a'; 
     player1.pathToTexture = (char*) malloc (100);
@@ -48,10 +56,13 @@ int main(int argc, char **argv)
     t_player player2;
     player2.ch = 'B';
     player2.chClone = 'b';
-    player2.x = WIDTH_SYMB - 8;
+    player2.x = WIDTH_SYMB / 4 * 3 + 1;
     player2.y = HEIGHT_SYMB - 2; 
+    player2.cloneX = WIDTH_SYMB / 4;
+    player2.cloneY = 1;
     player2.pathToTexture = (char*) malloc (100);
     player2.pathToTexture = "sprites/spaceStation_018.png";
+
     // Initialize SDL
     SDL_Init(SDL_INIT_VIDEO);
    //SDL_Texture *imgBorder = IMG_LoadTexture(renderer, "imgs/1.png");
@@ -62,11 +73,11 @@ int main(int argc, char **argv)
     SDL_WINDOWPOS_UNDEFINED, 
     SDL_WINDOWPOS_UNDEFINED, WIDTH_PIX, HEIGHT_PIX, 
     SDL_WINDOW_OPENGL);
-    
+    //SDL_SetWindowFullscreen (window,/*SDL_WINDOW_FULLSCREEN*/SDL_WINDOW_FULLSCREEN_DESKTOP);
     // Create a renderer (accelerated and in sync with the display refresh rate)
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-
+SDL_Texture *imgB = IMG_LoadTexture(renderer, "imgs/zori.png");
     bool running = true;
     SDL_Event event;
     SDL_Rect rectPlayer1 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
@@ -84,6 +95,8 @@ int main(int argc, char **argv)
         player2.dy = 0;
         //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
+        SDL_Rect rect3 = {0, 0, WIDTH_SYMB * SIZE_OF_SYMBOL, HEIGHT_SYMB * SIZE_OF_SYMBOL};
+        SDL_RenderCopy(renderer, imgB, NULL, &rect3);
        // SDL_SetRenderDrawColor(renderer, 255, 0, 0 , 255);
         
        // SDL_SetRenderDrawColor(renderer, 255, 255, 0 , 255);
@@ -96,47 +109,42 @@ int main(int argc, char **argv)
             if (event.type == SDL_KEYUP) {
                 if(event.key.keysym.sym == SDLK_w) {
                     player1.dy = 1;
-                    break;
                 }
                 if(event.key.keysym.sym == SDLK_a) {
                     player1.dx = -1;
-                    break;
                 }
                 if(event.key.keysym.sym == SDLK_s) {
                     player1.dy = -1;
-                    break;
                 }
                 if(event.key.keysym.sym == SDLK_d) {
                     player1.dx = 1;
-                    break;
                 }
-                if(event.key.keysym.sym == SDLK_i) {
+                if(event.key.keysym.sym == SDLK_UP) {
                     player2.dy = 1;
-                    break;
                 }
-                if(event.key.keysym.sym == SDLK_l) {
+                if(event.key.keysym.sym == SDLK_RIGHT) {
                     player2.dx = 1;
-                     break;
                 }
-                if(event.key.keysym.sym == SDLK_k) {
+                if(event.key.keysym.sym == SDLK_DOWN) {
                     player2.dy = -1;
-                    break;
                 }
-                if(event.key.keysym.sym == SDLK_j) {
+                if(event.key.keysym.sym == SDLK_LEFT) {
                     player2.dx = -1;
-                    break;
+                }
+                if(event.key.keysym.sym == SDLK_ESCAPE) {
+                    running = false;
                 }
             }
             if(event.type == SDL_QUIT) {
                 
                 running = false;
             }
-        }
-    mx_move(&player1, &MAP[0][0]);
-            mx_move(&player2, &MAP[0][0]);
-            drawPlayer(&player1, renderer);
-            drawPlayer(&player2, renderer);
-            redrawMap(renderer, &MAP[0][0]);
+        } 
+        mx_move(&player1, &MAP[0][0]);
+        mx_move(&player2, &MAP[0][0]);
+        drawPlayer(&player1, renderer);
+        drawPlayer(&player2, renderer);
+        redrawMap(renderer, &MAP[0][0]);
         usleep(10000);
         SDL_RenderPresent(renderer);
     }
