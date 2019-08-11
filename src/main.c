@@ -93,37 +93,45 @@ int main(int argc, char **argv)
         // ОБРАБОТКА СИМВОЛОВ 
         // ТУТ ТРЕТИЙ ТАСК
         while(SDL_PollEvent(&event)) {
-            if(event.key.keysym.sym == SDLK_w) {
-                player1.dy = 1;
-            }
-            if(event.key.keysym.sym == SDLK_a) {
-                player1.dx = -1;
-            }
-            if(event.key.keysym.sym == SDLK_s) {
-                player1.dy = -1;
-            }
-            if(event.key.keysym.sym == SDLK_d) {
-                player1.dx = 1;
-            }
-            if(event.key.keysym.sym == SDLK_i) {
-                player2.dy = 1;
-            }
-            if(event.key.keysym.sym == SDLK_l) {
-                player2.dx = 1;
-            }
-            if(event.key.keysym.sym == SDLK_k) {
-                player2.dy = -1;
-            }
-            if(event.key.keysym.sym == SDLK_j) {
-                player2.dx = -1;
+            if (event.type == SDL_KEYUP) {
+                if(event.key.keysym.sym == SDLK_w) {
+                    player1.dy = 1;
+                    break;
+                }
+                if(event.key.keysym.sym == SDLK_a) {
+                    player1.dx = -1;
+                    break;
+                }
+                if(event.key.keysym.sym == SDLK_s) {
+                    player1.dy = -1;
+                    break;
+                }
+                if(event.key.keysym.sym == SDLK_d) {
+                    player1.dx = 1;
+                    break;
+                }
+                if(event.key.keysym.sym == SDLK_i) {
+                    player2.dy = 1;
+                    break;
+                }
+                if(event.key.keysym.sym == SDLK_l) {
+                    player2.dx = 1;
+                     break;
+                }
+                if(event.key.keysym.sym == SDLK_k) {
+                    player2.dy = -1;
+                    break;
+                }
+                if(event.key.keysym.sym == SDLK_j) {
+                    player2.dx = -1;
+                    break;
+                }
             }
             if(event.type == SDL_QUIT) {
                 
                 running = false;
             }
-            
-
-    }
+        }
     mx_move(&player1, &MAP[0][0]);
             mx_move(&player2, &MAP[0][0]);
             drawPlayer(&player1, renderer);
