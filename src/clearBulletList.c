@@ -4,13 +4,13 @@ void clearBulletList(t_bullet **list, char* MAP) {
     if(*list == 0) return;
     while(tmp)
     {
-        /*while(tmp->next->next) {
+        while(tmp->next->next) {
         tmp = tmp->next;
         }
         if(*(MAP + WIDTH_SYMB * (int)tmp->next->y  + (int)tmp->next->x) == '|') {
             *(MAP + WIDTH_SYMB * (int)tmp->next->y  + (int)tmp->next->x) = ' ';
         }
-        free(tmp->next);*/
+        free(tmp->next);
         tmp->next=0;
         tmp = *list;
     }

@@ -170,7 +170,7 @@ int main(int argc, char **argv)
                 }
                 if(event.key.keysym.sym == SDLK_w) {
                     player1.dy = -player1.speed;
-                    clearBulletList(&listBullet, &MAP[0][0]);
+                    //clearBulletList(&listBullet, &MAP[0][0]);
                     //rm(&listBullet);
                 }
                 if(event.key.keysym.sym == SDLK_a) {
