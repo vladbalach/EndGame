@@ -2,8 +2,8 @@
 
 void redrawMap(SDL_Renderer *render, char* MAP) {
      SDL_Rect rect = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
-    SDL_Texture *imgBorder = IMG_LoadTexture(render, "sprites/crate_01.png");
-    SDL_Texture *imgBorder2 = IMG_LoadTexture(render, "imgs/1.png");
+    SDL_Texture *imgBorder = IMG_LoadTexture(render, "sprites/border2.png");
+    SDL_Texture *imgBorder2 = IMG_LoadTexture(render, "sprites/bull_red.png");
     for (int i = 0; i < HEIGHT_SYMB; i++){
             for (int j = 0; j < WIDTH_SYMB; j++) {
 

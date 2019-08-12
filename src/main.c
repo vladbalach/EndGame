@@ -60,13 +60,13 @@ int main(int argc, char **argv)
     player1.bulletSpeed = 0.35;
     player1.ch = 'A';
     player1.chClone = 'a';
-    player1.coolDown = 500000; 
+    player1.coolDown = 180000; 
     player1.pathToTexture = (char*) malloc (100);
-    player1.pathToTexture = "sprites/spaceStation_023.png";
+    player1.pathToTexture = "sprites/playerShip2_red.png";
     player1.speed = 1;
     t_player player2;
     player2.bulletSpeed = 0.35;
-    player2.coolDown = 500000;
+    player2.coolDown = 180000;
     player2.ch = 'B';
     player2.chClone = 'b';
     player2.x = WIDTH_SYMB / 4 * 3 - 1 ;
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
     player2.speed = 1;
     player2.cloneY = 1;
     player2.pathToTexture = (char*) malloc (100);
-    player2.pathToTexture = "sprites/spaceStation_018.png";
+    player2.pathToTexture = "sprites/playerShip1_blue.png";
     player1.cloneX = player2.x+1;
     player2.cloneX = player1.x+1;
     clock_t startTime, cd1, cd2;
@@ -98,7 +98,7 @@ int main(int argc, char **argv)
     // Create a renderer (accelerated and in sync with the display refresh rate)
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    SDL_Texture *imgB = IMG_LoadTexture(renderer, "imgs/zori.png");
+    SDL_Texture *imgB = IMG_LoadTexture(renderer, "sprites/black.png");
     bool running = true;
     SDL_Event event;
     SDL_Rect rectPlayer1 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
