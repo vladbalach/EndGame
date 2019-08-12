@@ -7,7 +7,10 @@ int moveBullet(t_bullet **bullet, char *MAP) {
     float oneDy = ((int)tmp->dy > 0) ? 1 : (((int)tmp->dy == 0) ? 0 : -1);
     int index = 0;
     while (tmp) {
-        
+        if (*(MAP + WIDTH_SYMB * (int)tmp->y  + (int)tmp->x + (int)oneDx) == '0') {
+                    oneDx = -oneDx;
+                    tmp->dx = -tmp->dx;
+        }
          //printf("y = %d\n", tmp->y);
         if ((*(MAP + WIDTH_SYMB * (int)tmp->y + (int)tmp->x) == '|') && ((int)tmp->y < HEIGHT_SYMB-1))
                 *(MAP + WIDTH_SYMB * (int)tmp->y + (int)tmp->x) = ' ';
@@ -18,12 +21,11 @@ int moveBullet(t_bullet **bullet, char *MAP) {
         }
         else
         {
-            for (int i = 0; i < tmp->dx; i++) {
-                if (*(MAP + WIDTH_SYMB * (int)tmp->y + (int)tmp->x) == '0') {
-                    oneDx = -oneDx;
-                }
-                tmp->x += oneDx;
-            }
+            //for (int i = 0; i < tmp->dx; i++) {
+                
+                
+            //}
+            tmp->x += oneDx;
             tmp->y += tmp->dy;
             if ((int)tmp->y > 0)
             {

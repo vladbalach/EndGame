@@ -37,6 +37,10 @@ void drawPlayer(t_player *player, SDL_Renderer *render) {
     rect2.y = player->cloneY * SIZE_OF_SYMBOL;
     rect2.w = SIZE_OF_SYMBOL * 3;
     SDL_RenderCopy(render, imgBorder2, NULL, &rect2);//SDL_RenderFillRect(render, rect);
+    //free(&rect);
+    //free(&rect2);
+    //free(imgBorder);
+    //free(imgBorder2);
 }
 
 int main(int argc, char **argv)
@@ -87,7 +91,7 @@ int main(int argc, char **argv)
     // Create a renderer (accelerated and in sync with the display refresh rate)
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-SDL_Texture *imgB = IMG_LoadTexture(renderer, "imgs/zori.png");
+    SDL_Texture *imgB = IMG_LoadTexture(renderer, "imgs/zori.png");
     bool running = true;
     SDL_Event event;
     SDL_Rect rectPlayer1 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
@@ -124,15 +128,15 @@ SDL_Texture *imgB = IMG_LoadTexture(renderer, "imgs/zori.png");
             if (event.type == SDL_KEYUP) {
                 if((event.key.keysym.sym == SDLK_SPACE) && (clock() > cd1 + player1.coolDown)) {
                     cd1 = clock();
-                    mx_push_front(&listBullet, player1.x, player1.y, 0, -player1.bulletSpeed, &MAP[0][0]);
-                    mx_push_front(&listBullet, player1.cloneX, player1.cloneY, 0, player1.bulletSpeed, &MAP[0][0]);
+                    mx_push_front(&listBullet, player1.x, player1.y - 1, 0, -player1.bulletSpeed, &MAP[0][0]);
+                    mx_push_front(&listBullet, player1.cloneX, player1.cloneY + 1, 0, player1.bulletSpeed, &MAP[0][0]);
                     break;
                 }
                 
                 if((event.key.keysym.sym == SDLK_RSHIFT)&& (clock() > cd2 + player2.coolDown)) {
                     cd2 = clock();
-                    mx_push_front(&listBullet, player2.x, player2.y, 0, -player2.bulletSpeed, &MAP[0][0]);
-                    mx_push_front(&listBullet, player2.cloneX, player2.cloneY, 0, player2.bulletSpeed, &MAP[0][0]);
+                    mx_push_front(&listBullet, player2.x, player2.y - 1, 0, -player2.bulletSpeed, &MAP[0][0]);
+                    mx_push_front(&listBullet, player2.cloneX, player2.cloneY + 1, 0, player2.bulletSpeed, &MAP[0][0]);
                     break;
                 }
                 if(event.key.keysym.sym == SDLK_w) {
@@ -168,19 +172,21 @@ SDL_Texture *imgB = IMG_LoadTexture(renderer, "imgs/zori.png");
                 running = false;
             }
         } 
+        checkMove(&player1, &MAP[0][0], WIDTH_SYMB);
+        checkMove(&player2, &MAP[0][0], WIDTH_SYMB);
         mx_move(&player1, &MAP[0][0]);
         mx_move(&player2, &MAP[0][0]);
         drawPlayer(&player1, renderer);
         drawPlayer(&player2, renderer);
         redrawMap(renderer, &MAP[0][0]);
-        usleep(10000);
+        usleep(1000);
         SDL_RenderPresent(renderer);
     }
     // Release resources
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-
+    
     return 0;
 }
 

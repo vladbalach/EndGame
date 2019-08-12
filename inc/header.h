@@ -53,7 +53,8 @@ void mx_move(t_player* player, char *MAP);
 void checkMove(t_player *player, char* mass, int width);
 void redrawMap(SDL_Renderer *render, char* MAP);
 void drawMap( SDL_Renderer *render, char* MAP);
-
+void check_x(t_player *player, char* mass, int width);
+void check_y(t_player *player, char* mass, int width);
 //BULLETS
 t_bullet *createBullet(float x, float y, float dx, float dy, char *MAP);
 void mx_push_front(t_bullet **list, float x, float y, float dx,float dy, char *MAP) ;
