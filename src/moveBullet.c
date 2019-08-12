@@ -11,10 +11,10 @@ int moveBullet(t_bullet **bullet, char *MAP) {
                     oneDx = -oneDx;
                     tmp->dx = -tmp->dx;
         }
-         //printf("y = %d\n", tmp->y);
+         //printf("y = %d\n", tmp->y) ;
         if ((*(MAP + WIDTH_SYMB * (int)tmp->y + (int)tmp->x) == '|') && ((int)tmp->y < HEIGHT_SYMB-1))
                 *(MAP + WIDTH_SYMB * (int)tmp->y + (int)tmp->x) = ' ';
-        if (((int)tmp->y < 1) || ((int)tmp->y > HEIGHT_SYMB - 2))
+        if (((int)tmp->y < 1) || ((int)tmp->y > HEIGHT_SYMB - 3))
         {
             mx_pop_index(bullet, index);
             index--;

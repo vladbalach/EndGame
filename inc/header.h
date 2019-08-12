@@ -24,6 +24,7 @@ typedef struct s_player {
     float cloneY;
     float dx;
     float dy;
+    float speed;
     char ch;
     char chClone;
     float bulletSpeed; // Скорость снаряда
@@ -49,6 +50,7 @@ B - player 2
 a - clone 1
 b - clone 2
  */
+
 void mx_move(t_player* player, char *MAP);
 void checkMove(t_player *player, char* mass, int width);
 void redrawMap(SDL_Renderer *render, char* MAP);
@@ -56,6 +58,7 @@ void drawMap( SDL_Renderer *render, char* MAP);
 void check_x(t_player *player, char* mass, int width);
 void check_y(t_player *player, char* mass, int width);
 //BULLETS
+void clearBulletList(t_bullet **list, char* MAP);
 t_bullet *createBullet(float x, float y, float dx, float dy, char *MAP);
 void mx_push_front(t_bullet **list, float x, float y, float dx,float dy, char *MAP) ;
 int moveBullet(t_bullet **bullet, char *MAP);

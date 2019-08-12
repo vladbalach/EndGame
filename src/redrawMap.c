@@ -7,10 +7,10 @@ void redrawMap(SDL_Renderer *render, char* MAP) {
     for (int i = 0; i < HEIGHT_SYMB; i++){
             for (int j = 0; j < WIDTH_SYMB; j++) {
 
-                printf("%c", *(MAP + i * WIDTH_SYMB + j));
+                //printf("%c", *(MAP + i * WIDTH_SYMB + j));
                 if (*(MAP + i * WIDTH_SYMB + j) == '0') {
                     rect.x = j * SIZE_OF_SYMBOL;
-                    rect.y = i * SIZE_OF_SYMBOL;
+                    rect.y = i * SIZE_OF_SYMBOL;      
                     SDL_RenderCopy(render, imgBorder, NULL, &rect);
                     //SDL_RenderFillRect(renderer, &rect);
                 }
@@ -28,6 +28,9 @@ void redrawMap(SDL_Renderer *render, char* MAP) {
                     //SDL_RenderFillRect(renderer, &rect);
                 }
             }
-            printf("\n");
+            //printf("\n");
         }
+        SDL_DestroyTexture(imgBorder);
+        SDL_DestroyTexture(imgBorder2);
+        //SDL_DestroyRect(&rect);
 }

@@ -16,7 +16,8 @@ SRCS = ./src/main.c \
 	./src/mx_pop_front.c \
 	./src/mx_pop_back.c \
 	./src/check_x.c \
-	./src/check_y.c
+	./src/check_y.c \
+	./src/clearBulletList.c
 
 CTMP = 	main.c \
 	mx_move.c \
@@ -30,7 +31,8 @@ CTMP = 	main.c \
 	mx_pop_front.c \
 	mx_pop_back.c \
 	check_x.c \
-	check_y.c
+	check_y.c \
+	clearBulletList.c
 
 CFLSGS = -std=c11 -Wall -Wextra -Wpedantic -Werror
 
@@ -39,7 +41,7 @@ all: install uninstall
 install:
 	@cp $(SRCS) .
 	@cp $(INC) .
-	@gcc $(CTMP) -I ./Frameworks/SDL2.framework/Versions/A/Header -F ./Frameworks -framework SDL2 -rpath ./Frameworks -I ./Frameworks/SDL2_image.framework/Versions/A/Header -F ./Frameworks -framework SDL2_image -rpath ./frameworks
+	@gcc $(CTMP) -I ./Frameworks/SDL2.framework/Versions/A/Header -F ./Frameworks -framework SDL2 -rpath ./Frameworks -I ./Frameworks/SDL2_image.framework/Versions/A/Header -F ./Frameworks -framework SDL2_image -rpath
 uninstall:
 	@rm -rf $(CTMP)
 	@rm -rf $(OUT)
