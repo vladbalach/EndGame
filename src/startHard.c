@@ -39,7 +39,7 @@ int startHard() {
     int GAME_STATUS = 0;//
     t_bullet *listBullet = 0;
     // Initialize SDL
-    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
    //SDL_Texture *imgBorder = IMG_LoadTexture(renderer, "imgs/1.png");
     //SDL_Texture *imgBorder2 = IMG_LoadTexture(renderer, "sprites/environment_02.png");
     // Create a SDL window
@@ -48,12 +48,19 @@ int startHard() {
     SDL_WINDOWPOS_UNDEFINED, 
     SDL_WINDOWPOS_UNDEFINED, WIDTH_PIX, HEIGHT_PIX, 
     SDL_WINDOW_OPENGL);
+    //Creating MUSIC channel and adding tracks
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+    Mix_Chunk *laser1 = Mix_LoadWAV("music/laser5.wav");
+    Mix_Chunk *laser2 = Mix_LoadWAV("music/laser2.wav");
+    Mix_Music *backgroundHard = Mix_LoadMUS("music/Orbital Colossus.mp3");
     //SDL_SetWindowFullscreen (window,/*SDL_WINDOW_FULLSCREEN*/SDL_WINDOW_FULLSCREEN_DESKTOP);
     // Create a renderer (accelerated and in sync with the display refresh rate)
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     SDL_Texture *imgB = IMG_LoadTexture(renderer, "sprites/black.png");
     bool running = true;
+    Mix_PlayMusic(backgroundHard, -1);
+    Mix_VolumeMusic(24);
     SDL_Event event;
     SDL_Rect rectPlayer1 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     SDL_Rect rectPlayer2 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
@@ -90,6 +97,8 @@ int startHard() {
             if (event.type == SDL_KEYUP) {
                 if((event.key.keysym.sym == SDLK_SPACE) && (clock() > cd1 + player1.coolDown)) {
                     cd1 = clock();
+                    Mix_PlayChannel(-1,laser1, 0);
+                    Mix_Volume(-1, MIX_MAX_VOLUME);
                     mx_push_front(&listBullet, player1.x, player1.y - 1, 0, -player1.bulletSpeed, &MAP[0][0]);
                     mx_push_front(&listBullet, player1.cloneX, player1.cloneY + 1, 0, player1.bulletSpeed, &MAP[0][0]);
                     break;
@@ -97,6 +106,8 @@ int startHard() {
                 
                 if((event.key.keysym.sym == SDLK_RSHIFT)&& (clock() > cd2 + player2.coolDown)) {
                     cd2 = clock();
+                    Mix_PlayChannel(-1,laser1, 0);
+                    Mix_Volume(-1, MIX_MAX_VOLUME);
                     mx_push_front(&listBullet, player2.x, player2.y - 1, 0, -player2.bulletSpeed, &MAP[0][0]);
                     mx_push_front(&listBullet, player2.cloneX, player2.cloneY + 1, 0, player2.bulletSpeed, &MAP[0][0]);
                     break;
@@ -151,6 +162,10 @@ int startHard() {
     clearBulletList(&listBullet, &MAP[0][0]);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    Mix_FreeMusic(backgroundHard);
+    Mix_FreeChunk(laser1);
+    Mix_FreeChunk(laser2);
+    Mix_CloseAudio();
     //IMG_Quit();
     SDL_Quit();
     return 1;
