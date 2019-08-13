@@ -22,8 +22,8 @@ static void initPlayers(t_player *player1, t_player *player2) {
     player1->cloneX = player2->x + 1;
     player2->cloneX = player1->x + 1;
 }
-
-int startHard() {
+//"player" to out winner
+int startHard(t_player *player, SDL_Renderer *renderer) {
     char MAP[HEIGHT_SYMB][WIDTH_SYMB];
     t_player player1;
     t_player player2;
@@ -31,23 +31,17 @@ int startHard() {
     clock_t startTime, cd1, cd2;
     startTime = clock();
     cd1 = clock();
-    cd2 = clock();
-    
+    cd2 = clock();;
 
     
     //timerTo
     int GAME_STATUS = 0;//
     t_bullet *listBullet = 0;
     // Initialize SDL
-    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+   
    //SDL_Texture *imgBorder = IMG_LoadTexture(renderer, "imgs/1.png");
     //SDL_Texture *imgBorder2 = IMG_LoadTexture(renderer, "sprites/environment_02.png");
     // Create a SDL window
-    SDL_Window *window = 
-    SDL_CreateWindow("Hello, SDL2", 
-    SDL_WINDOWPOS_UNDEFINED, 
-    SDL_WINDOWPOS_UNDEFINED, WIDTH_PIX, HEIGHT_PIX, 
-    SDL_WINDOW_OPENGL);
     //Creating MUSIC channel and adding tracks
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     Mix_Chunk *laser1 = Mix_LoadWAV("music/laser5.wav");
@@ -55,8 +49,6 @@ int startHard() {
     Mix_Music *backgroundHard = Mix_LoadMUS("music/Orbital Colossus.mp3");
     //SDL_SetWindowFullscreen (window,/*SDL_WINDOW_FULLSCREEN*/SDL_WINDOW_FULLSCREEN_DESKTOP);
     // Create a renderer (accelerated and in sync with the display refresh rate)
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
-    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     SDL_Texture *imgB = IMG_LoadTexture(renderer, "sprites/black.png");
     bool running = true;
     Mix_PlayMusic(backgroundHard, -1);
@@ -81,11 +73,11 @@ int startHard() {
         GAME_STATUS = moveBullet(&listBullet,&MAP[0][0]);
         if(GAME_STATUS == -1) {
             printf("First lose");
-            running = false;
+            return 1;
         }
         if(GAME_STATUS == 1) {
             printf("Second lose");
-            running = false;
+            return 1;
         }
         //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
@@ -159,14 +151,13 @@ int startHard() {
     // Release resources
     //SDL_DestroyTexture(textTexture);
    // SDL_FreeSurface(textSurface);
+   
     clearBulletList(&listBullet, &MAP[0][0]);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
     Mix_FreeMusic(backgroundHard);
     Mix_FreeChunk(laser1);
     Mix_FreeChunk(laser2);
     Mix_CloseAudio();
     //IMG_Quit();
-    SDL_Quit();
-    return 1;
+    //SDL_Quit();
+    return 2;
 }

@@ -21,23 +21,30 @@ void gameStart(int mode) {
 int main() {
     int status = 1;//0 - exit; 1 - continue
     SDL_Init(SDL_INIT_VIDEO);
-          SDL_Window *window = 
-        SDL_CreateWindow("Hello, SDL2", SDL_WINDOWPOS_UNDEFINED, 
-            SDL_WINDOWPOS_UNDEFINED, WIDTH_PIX, HEIGHT_PIX, SDL_WINDOW_OPENGL);
-        SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
+    SDL_Window *window = 
+    SDL_CreateWindow("Hello, SDL2", SDL_WINDOWPOS_UNDEFINED, 
+    SDL_WINDOWPOS_UNDEFINED, WIDTH_PIX, HEIGHT_PIX, SDL_WINDOW_OPENGL);
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-            showStartMenu(renderer);
-               mx_checkPlayers(/*t_player *player, t_player *player2,*/renderer);
-               SDL_DestroyRenderer(renderer);
-               SDL_DestroyWindow(window);
-    while(status) {
-        status = startHard();
-        if (status == 0) {
-            break;
+    status = showStartMenu(renderer);
+    t_player *player = 0;
+    if (status == 4)
+    mx_checkPlayers(/*t_player *player, t_player *player2,*/renderer);
+    //SDL_DestroyRenderer(renderer);
+    //SDL_DestroyWindow(window);
+    if (status == 2) {
+        while(status) {
+            status = startHard(player, renderer);
+            if (status == 0) {
+                break;
+            }
+            status = endScreen(player, renderer);
         }
-        endScreen();
     }
-     SDL_DestroyWindow(window);
+    if (status == 1) {
+        //EzMode
+    }
+    SDL_DestroyWindow(window);
     IMG_Quit();
     SDL_Quit();
     return 0;
