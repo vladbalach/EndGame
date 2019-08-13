@@ -70,7 +70,8 @@ void drawText(SDL_Color color, int x, int y, char *text, SDL_Renderer *renderer,
 void initMap(char *mass);
 
 //SCREENS
-int showStartMenu();
+int showStartMenu(SDL_Renderer *renderer);
+void mx_checkPlayers(/*t_player *player, t_player *player2, *//*SDL_Window *window*/SDL_Renderer *renderer);
 int startHard();
 int endScreen();
 //BULLETS

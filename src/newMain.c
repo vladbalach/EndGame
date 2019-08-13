@@ -20,7 +20,16 @@ void gameStart(int mode) {
 
 int main() {
     int status = 1;//0 - exit; 1 - continue
-        showStartMenu();
+    SDL_Init(SDL_INIT_VIDEO);
+          SDL_Window *window = 
+        SDL_CreateWindow("Hello, SDL2", SDL_WINDOWPOS_UNDEFINED, 
+            SDL_WINDOWPOS_UNDEFINED, WIDTH_PIX, HEIGHT_PIX, SDL_WINDOW_OPENGL);
+        SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
+    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+            showStartMenu(renderer);
+               mx_checkPlayers(/*t_player *player, t_player *player2,*/renderer);
+               SDL_DestroyRenderer(renderer);
+               SDL_DestroyWindow(window);
     while(status) {
         status = startHard();
         if (status == 0) {
@@ -28,5 +37,8 @@ int main() {
         }
         endScreen();
     }
+     SDL_DestroyWindow(window);
+    IMG_Quit();
+    SDL_Quit();
     return 0;
 }

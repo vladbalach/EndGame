@@ -6,16 +6,16 @@ void drawTexturedSquad(int x, int y, int w, int h, char* texture, SDL_Renderer *
     SDL_DestroyTexture(customize_imgBackground);
 }
 
-int showStartMenu() {
+int showStartMenu(SDL_Renderer *renderer) {
     bool running = true;
-    SDL_Init(SDL_INIT_VIDEO);
+    /*SDL_Init(SDL_INIT_VIDEO);
     SDL_Window *window = 
     SDL_CreateWindow("Hello, SDL2", 
     SDL_WINDOWPOS_UNDEFINED, 
     SDL_WINDOWPOS_UNDEFINED, WIDTH_PIX, HEIGHT_PIX, 
-    SDL_WINDOW_OPENGL);
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
-    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_WINDOW_OPENGL);*/
+    /*SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
+    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);*/
     SDL_Event event;
     if(TTF_Init()==-1) {
         printf("TTF_Init: %s\n", TTF_GetError());
@@ -58,9 +58,9 @@ int showStartMenu() {
         SDL_RenderPresent(renderer);
     }
     SDL_DestroyTexture(imgBackground);
-    SDL_DestroyRenderer(renderer);
+    /*SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     IMG_Quit();
-    SDL_Quit();
-    return 0;
+    SDL_Quit();*/
+    return 1;
 }
