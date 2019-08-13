@@ -1,5 +1,5 @@
 #include "header.h"
-int main() {
+int showStartMenu() {
     bool running = true;
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window *window = 
@@ -14,19 +14,35 @@ int main() {
         printf("TTF_Init: %s\n", TTF_GetError());
         exit(2);
     }
-    TTF_Font *font = TTF_OpenFont("OpenSansBold.ttf",20);
+    TTF_Font *font = TTF_OpenFont("ttf/OpenSansBold.ttf",96);
     if (font == 0) {
           printf("%s",TTF_GetError());
           exit(1);
     };
     SDL_Color color = {0, 255, 0, 255};
+    //Customize panel
+    SDL_Rect customize_backgroundRect = {150, 400, 500, 700};
+    SDL_Texture *customize_imgBackground = IMG_LoadTexture(renderer, "sprites/border2.png");
+
+    //text game Name
     SDL_Surface *textSurface = TTF_RenderText_Solid(font, "Name Of Game!", color);
-    SDL_Texture *text = SDL_CreateTextureFromSurface(renderer, textSurface);
-    SDL_Rect textRect = {0,0,100,100};
-    SDL_Texture *imgBorder = IMG_LoadTexture(renderer, "sprites/crate_01.png");
-    
-    //SDL_QueryTexture(text, NULL, NULL, &textRect.w, &textRect.h);
-    //SDL_FreeSurface(textSurface);
+    SDL_Texture *textureGameName = SDL_CreateTextureFromSurface(renderer, textSurface);
+    SDL_Rect textRect = {WIDTH_PIX/4,150,WIDTH_PIX/2,100};
+
+    //text 
+    color.r = 0;
+    color.g = 0;
+    color.b = 255;
+    SDL_Surface *sur_textCustomize = TTF_RenderText_Solid(font, "Customize", color);
+    SDL_Texture *texture_Customize = SDL_CreateTextureFromSurface(renderer, sur_textCustomize);
+    SDL_Rect rect_textCustomize = {WIDTH_PIX/4,150,WIDTH_PIX/2,100};
+
+    //background 
+    SDL_Rect backgroundRect = {0, 0, WIDTH_PIX, HEIGHT_PIX};
+    SDL_Texture *imgBackground = IMG_LoadTexture(renderer, "sprites/border2.png");
+    //SDL_SetRenderDrawColor(renderer, 0,255,0,255);
+    SDL_QueryTexture(textureGameName, NULL, NULL, &textRect.w, &textRect.h);
+    SDL_FreeSurface(textSurface);
     textSurface = 0;
     while(running) {
         while(SDL_PollEvent(&event)) {
@@ -35,13 +51,21 @@ int main() {
                 }
         }
         //SDL_RenderCopy(renderer, imgBorder, NULL, &textRect);
-        SDL_RenderCopy(renderer, text, NULL, &textRect);
+       
+        //SDL_RenderCopy(renderer, imgBackground, NULL, &backgroundRect);
+       
+        SDL_RenderCopy(renderer, imgBackground, NULL, &backgroundRect);
+        SDL_RenderCopy(renderer, textureGameName, NULL, &textRect);
+        SDL_RenderCopy(renderer, customize_imgBackground, NULL, &customize_backgroundRect);
+        SDL_RenderCopy(renderer, customize_imgBackground, NULL, &rect_textCustomize);
         usleep(100);
         SDL_RenderPresent(renderer);
     }
-    SDL_DestroyTexture(text);
+    SDL_DestroyTexture(textureGameName);
+    SDL_DestroyTexture(imgBackground);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     IMG_Quit();
     SDL_Quit();
+    return 0;
 }

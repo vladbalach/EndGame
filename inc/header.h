@@ -65,6 +65,10 @@ void check_y(t_player *player, char* mass, int width);
 //MAP
 void initMap(char *mass);
 
+//SCREENS
+int showStartMenu();
+int startHard();
+int endScreen();
 //BULLETS
 void clearBulletList(t_bullet **list, char* MAP);
 t_bullet *createBullet(float x, float y, float dx, float dy, char *MAP);

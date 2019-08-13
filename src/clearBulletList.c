@@ -2,7 +2,7 @@
 void clearBulletList(t_bullet **list, char* MAP) {
     t_bullet *tmp = *list;
     if(*list == 0) return;
-    while(tmp)
+    while(tmp->next)
     {
         while(tmp->next->next) {
         tmp = tmp->next;

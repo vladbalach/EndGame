@@ -21,7 +21,10 @@ SRCS = ./src/main.c \
 	./src/check_y.c \
 	./src/clearBulletList.c \
 	./src/drawPlayer.c \
-	./src/initMap.c
+	./src/initMap.c \
+	./src/showStartmenu.c \
+	./src/startHard.c \
+	./src/endScreen.c
 
 CTMP = 	main.c \
 	newMain.c \
@@ -39,7 +42,10 @@ CTMP = 	main.c \
 	check_y.c \
 	clearBulletList.c \
 	drawPlayer.c \
-	initMap.c
+	initMap.c \
+	showStartmenu.c \
+	startHard.c \
+	endScreen.c
 
 CFLSGS = -std=c11 -Wall -Wextra -Wpedantic -Werror
 
@@ -65,3 +71,5 @@ clean:
 	@rm -rf $(OUT)
 	@rm -rf $(HEADTMP)
 reinstall: clean all
+start: all
+	./a.out
