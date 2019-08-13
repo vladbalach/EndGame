@@ -62,6 +62,9 @@ void drawMap( SDL_Renderer *render, char* MAP);
 void check_x(t_player *player, char* mass, int width);
 void check_y(t_player *player, char* mass, int width);
 
+//GENERAL
+void drawText(SDL_Color color, int x, int y, char *text, SDL_Renderer *renderer,  int size);
+
 //MAP
 void initMap(char *mass);
 
@@ -72,6 +75,7 @@ int endScreen();
 //BULLETS
 void clearBulletList(t_bullet **list, char* MAP);
 t_bullet *createBullet(float x, float y, float dx, float dy, char *MAP);
+
 void mx_push_front(t_bullet **list, float x, float y, float dx,float dy, char *MAP) ;
 int moveBullet(t_bullet **bullet, char *MAP);
 void mx_pop_back(t_bullet **list);
