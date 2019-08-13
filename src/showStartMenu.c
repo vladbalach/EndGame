@@ -1,4 +1,11 @@
 #include "header.h"
+void drawTexturedSquad(int x, int y, int w, int h, char* texture, SDL_Renderer *renderer) {
+    SDL_Rect customize_backgroundRect = {x, y, w, h};
+    SDL_Texture *customize_imgBackground = IMG_LoadTexture(renderer, texture);
+    SDL_RenderCopy(renderer, customize_imgBackground, NULL, &customize_backgroundRect);
+    SDL_DestroyTexture(customize_imgBackground);
+}
+
 int showStartMenu() {
     bool running = true;
     SDL_Init(SDL_INIT_VIDEO);
@@ -20,30 +27,17 @@ int showStartMenu() {
           exit(1);
     };
     SDL_Color color = {0, 255, 0, 255};
+
     //Customize panel
     SDL_Rect customize_backgroundRect = {150, 400, 500, 700};
     SDL_Texture *customize_imgBackground = IMG_LoadTexture(renderer, "sprites/border2.png");
 
-    //text game Name
-    SDL_Surface *textSurface = TTF_RenderText_Solid(font, "Name Of Game!", color);
-    SDL_Texture *textureGameName = SDL_CreateTextureFromSurface(renderer, textSurface);
-    SDL_Rect textRect = {WIDTH_PIX/4,150,WIDTH_PIX/2,100};
-
-    //text 
-    color.r = 0;
-    color.g = 0;
-    color.b = 255;
-    SDL_Surface *sur_textCustomize = TTF_RenderText_Solid(font, "Customize", color);
-    SDL_Texture *texture_Customize = SDL_CreateTextureFromSurface(renderer, sur_textCustomize);
-    SDL_Rect rect_textCustomize = {WIDTH_PIX/4,150,WIDTH_PIX/2,100};
 
     //background 
     SDL_Rect backgroundRect = {0, 0, WIDTH_PIX, HEIGHT_PIX};
+
     SDL_Texture *imgBackground = IMG_LoadTexture(renderer, "sprites/border2.png");
-    //SDL_SetRenderDrawColor(renderer, 0,255,0,255);
-    SDL_QueryTexture(textureGameName, NULL, NULL, &textRect.w, &textRect.h);
-    SDL_FreeSurface(textSurface);
-    textSurface = 0;
+
     while(running) {
         while(SDL_PollEvent(&event)) {
             if(event.key.keysym.sym == SDLK_ESCAPE) {
@@ -53,15 +47,16 @@ int showStartMenu() {
         //SDL_RenderCopy(renderer, imgBorder, NULL, &textRect);
        
         //SDL_RenderCopy(renderer, imgBackground, NULL, &backgroundRect);
-       
+        
         SDL_RenderCopy(renderer, imgBackground, NULL, &backgroundRect);
-        SDL_RenderCopy(renderer, textureGameName, NULL, &textRect);
+       // drawTexturedSquad(150, 400, 500, 700, "sprites/border2.png", renderer);
         SDL_RenderCopy(renderer, customize_imgBackground, NULL, &customize_backgroundRect);
-        SDL_RenderCopy(renderer, customize_imgBackground, NULL, &rect_textCustomize);
+       // drawText(color, WIDTH_PIX/4, 150, "Name of game!", renderer,  96);
+        drawText(color, 300, 300, "char *text", renderer,  32, font);
+
         usleep(100);
         SDL_RenderPresent(renderer);
     }
-    SDL_DestroyTexture(textureGameName);
     SDL_DestroyTexture(imgBackground);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

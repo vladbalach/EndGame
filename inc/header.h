@@ -64,7 +64,7 @@ void check_x(t_player *player, char* mass, int width);
 void check_y(t_player *player, char* mass, int width);
 
 //GENERAL
-void drawText(SDL_Color color, int x, int y, char *text, SDL_Renderer *renderer,  int size);
+void drawText(SDL_Color color, int x, int y, char *text, SDL_Renderer *renderer,  int size, TTF_Font *font);
 
 //MAP
 void initMap(char *mass);
