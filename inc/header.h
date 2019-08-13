@@ -62,6 +62,7 @@ void redrawMap(SDL_Renderer *render, char* MAP);
 void drawMap( SDL_Renderer *render, char* MAP);
 void check_x(t_player *player, char* mass, int width);
 void check_y(t_player *player, char* mass, int width);
+void initPlayers(t_player **player1, t_player **player2);
 
 //GENERAL
 void drawText(SDL_Color color, int x, int y, char *text, SDL_Renderer *renderer, TTF_Font *font);
@@ -70,9 +71,9 @@ void drawText(SDL_Color color, int x, int y, char *text, SDL_Renderer *renderer,
 void initMap(char *mass);
 
 //SCREENS
-int showStartMenu(SDL_Renderer *renderer);
+int showStartMenu(SDL_Renderer *renderer, t_player *player1, t_player *player2);
 void mx_checkPlayers(/*t_player *player, t_player *player2, *//*SDL_Window *window*/SDL_Renderer *renderer);
-int startHard(t_player *player, SDL_Renderer *renderer);
+int startHard(t_player *player1, t_player *player2, t_player *winPlayer, SDL_Renderer *renderer);
 int endScreen(t_player *player, SDL_Renderer *renderer);
 //BULLETS
 void clearBulletList(t_bullet **list, char* MAP);

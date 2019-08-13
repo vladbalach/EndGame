@@ -1,6 +1,5 @@
 #include "header.h"
 
-
 /*void gameFunc() {
     player1, player2;
     int gameMod = 0;//1 - Отдых; 2 - Соревнование
@@ -26,19 +25,20 @@ int main() {
     SDL_WINDOWPOS_UNDEFINED, WIDTH_PIX, HEIGHT_PIX, SDL_WINDOW_OPENGL);
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    status = showStartMenu(renderer);
-    t_player *player = 0;
-    if (status == 4)
+    t_player *player1 = 0;
+    t_player *player2 = 0;
+    t_player *winPlayer = 0;
+    initPlayers(&player1, &player2);
+     status = showStartMenu(renderer, player1, player2);
+   if (status == 3)
     mx_checkPlayers(/*t_player *player, t_player *player2,*/renderer);
-    //SDL_DestroyRenderer(renderer);
-    //SDL_DestroyWindow(window);
     if (status == 2) {
         while(status) {
-            status = startHard(player, renderer);
+            status = startHard(player1, player2, winPlayer, renderer);
             if (status == 0) {
                 break;
             }
-            status = endScreen(player, renderer);
+            status = endScreen(winPlayer, renderer);
         }
     }
     if (status == 1) {

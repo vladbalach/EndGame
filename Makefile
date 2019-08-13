@@ -26,7 +26,8 @@ SRCS = ./src/main.c \
 	./src/startHard.c \
 	./src/endScreen.c \
 	./src/drawText.c \
-	./src/checkPlayers.c
+	./src/checkPlayers.c \
+	./src/initPlayers.c
 
 CTMP = 	main.c \
 	newMain.c \
@@ -49,7 +50,8 @@ CTMP = 	main.c \
 	startHard.c \
 	endScreen.c \
 	drawText.c \
-	checkPlayers.c
+	checkPlayers.c \
+	initPlayers.c
 
 CFLSGS = -std=c11 -Wall -Wextra -Wpedantic -Werror
 
