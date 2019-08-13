@@ -7,6 +7,7 @@
 #include <time.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #define SIZE_OF_SYMBOL 32
 #define HEIGHT_SYMB 39 // MAP SYMBOLS
 #define WIDTH_SYMB 60 
@@ -30,6 +31,7 @@ typedef struct s_player {
     float bulletSpeed; // Скорость снаряда
     int coolDown; //gthезарядка
     char *pathToTexture;
+    char *pathToBulletTexture;
 } t_player;
 
 typedef struct s_bullet {
@@ -51,12 +53,18 @@ a - clone 1
 b - clone 2
  */
 
+//PLAYER
+void drawPlayer(t_player *player, SDL_Renderer *render);
 void mx_move(t_player* player, char *MAP);
 void checkMove(t_player *player, char* mass, int width);
 void redrawMap(SDL_Renderer *render, char* MAP);
 void drawMap( SDL_Renderer *render, char* MAP);
 void check_x(t_player *player, char* mass, int width);
 void check_y(t_player *player, char* mass, int width);
+
+//MAP
+void initMap(char *mass);
+
 //BULLETS
 void clearBulletList(t_bullet **list, char* MAP);
 t_bullet *createBullet(float x, float y, float dx, float dy, char *MAP);

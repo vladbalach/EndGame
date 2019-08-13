@@ -1,18 +1,27 @@
 #include "header.h"
 
 
-// Draw points with random colors and positions
-// HEIGHT_SYMB - максимальная высота масива
-// WIDTH_SYMB - максимальная ширина масива
-// Сюда добавить единицы и нули
-
-
-
-void rm(t_bullet **list) {
-    free(*list);
+/*void gameFunc() {
+    player1, player2;
+    int gameMod = 0;//1 - Отдых; 2 - Соревнование
+    gameMod = showStartMenu();
+    gameStart(int mode);//
+    gameEnd()
 }
-/*int main(int argc, char **argv)
-{
+
+void gameStart(int mode) {
+    if(mode == 1) {
+        startChill();
+    }
+    if(mode == 2) {
+        startHard();
+    }
+}*/
+int showStartMenu() {
+return 0;
+}
+void startHard() {
+    
     //(SPI_SETKEYBOARDDELAY, 0, 0, 0)
     //const Uint8 *state = SDL_GetKeyboardState(NULL);
     char MAP[HEIGHT_SYMB][WIDTH_SYMB];
@@ -44,6 +53,9 @@ void rm(t_bullet **list) {
     startTime = clock();
     cd1 = clock();
     cd2 = clock();
+    
+
+    
     //timerTo
     int GAME_STATUS = 0;//
     t_bullet *listBullet = 0;
@@ -57,7 +69,7 @@ void rm(t_bullet **list) {
     SDL_WINDOWPOS_UNDEFINED, 
     SDL_WINDOWPOS_UNDEFINED, WIDTH_PIX, HEIGHT_PIX, 
     SDL_WINDOW_OPENGL);
-    //SDL_SetWindowFullscreen (window,SDL_WINDOW_FULLSCREEN_DESKTOP);
+    //SDL_SetWindowFullscreen (window,/*SDL_WINDOW_FULLSCREEN*/SDL_WINDOW_FULLSCREEN_DESKTOP);
     // Create a renderer (accelerated and in sync with the display refresh rate)
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -70,23 +82,11 @@ void rm(t_bullet **list) {
     initMap(&MAP[0][0]);
     SDL_Texture *imgBorder = IMG_LoadTexture(renderer, "sprites/crate_01.png");
     SDL_RenderCopy(renderer, imgBorder, NULL, &rect);
-    //                free(imgBorder);
-    //drawMap(&rect, renderer, &MAP[0][0]);
-    //t_bullet *t1 = createBullet(1,1,1,1,&MAP[0][0]);
-  
-    ////t_bullet *t2 = createBullet(1,1,1,1,&MAP[0][0]);
-    //t1->next = t2;
-    //rm(&t1);
-   // mx_push_front(&listBullet, 3, 4, 0, 1, &MAP[0][0]);
-   // mx_push_front(&listBullet, 3, 6, 0, 1, &MAP[0][0]);
-   // mx_push_front(&listBullet, 3, 8, 0, 1, &MAP[0][0]);
-    //mx_push_front(&listBullet, 3, 10, 0, 1, &MAP[0][0]);
-    //t_bullet *t = listBullet->next;
-    //listBullet->next = listBullet->next->next;
-    //free(t);
-    //printf("x=%f y=%f", listBullet->next->x, listBullet->next->next->y);
-    //free(listBullet);
-    /////////////////
+    ///TTF
+   
+
+
+
     
     while(running)
     {
@@ -177,9 +177,16 @@ void rm(t_bullet **list) {
         SDL_RenderPresent(renderer);
     }
     // Release resources
+    //SDL_DestroyTexture(textTexture);
+   // SDL_FreeSurface(textSurface);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    //IMG_Quit();
     SDL_Quit();
-    
+}
+
+int main() {
+    TTF_GetError();
+    startHard();
     return 0;
-}*/
+}

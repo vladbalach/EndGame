@@ -3,8 +3,10 @@ NAME = EndGame
 INC = inc/header.h 
 
 HEADTMP = header.h 
-
+SRCS2 = test.c
+CTMP2 = test.c
 SRCS = ./src/main.c \
+	./src/newMain.c \
 	./src/mx_move.c \
 	./src/checkMove.c \
 	./src/redrawMap.c \
@@ -17,9 +19,12 @@ SRCS = ./src/main.c \
 	./src/mx_pop_back.c \
 	./src/check_x.c \
 	./src/check_y.c \
-	./src/clearBulletList.c
+	./src/clearBulletList.c \
+	./src/drawPlayer.c \
+	./src/initMap.c
 
 CTMP = 	main.c \
+	newMain.c \
 	mx_move.c \
 	checkMove.c \
 	redrawMap.c \
@@ -32,16 +37,24 @@ CTMP = 	main.c \
 	mx_pop_back.c \
 	check_x.c \
 	check_y.c \
-	clearBulletList.c
+	clearBulletList.c \
+	drawPlayer.c \
+	initMap.c
 
 CFLSGS = -std=c11 -Wall -Wextra -Wpedantic -Werror
 
 all: install uninstall
-
+all2:
+	@gcc $(CTMP2)  -F ./Frameworks -framework SDL2 -rpath ./Frameworks \
+	 -F ./Frameworks -framework SDL2_image -rpath ./Frameworks\
+	 -F ./Frameworks -framework SDL2_ttf -rpath ./Frameworks\ 
 install:
 	@cp $(SRCS) .
 	@cp $(INC) .
-	@gcc $(CTMP) -I ./Frameworks/SDL2.framework/Versions/A/Header -F ./Frameworks -framework SDL2 -rpath ./Frameworks -I ./Frameworks/SDL2_image.framework/Versions/A/Header -F ./Frameworks -framework SDL2_image -rpath
+	@gcc $(CTMP)  -F ./Frameworks -framework SDL2 -rpath ./Frameworks \
+	 -F ./Frameworks -framework SDL2_image -rpath ./Frameworks\
+	 -F ./Frameworks -framework SDL2_ttf -rpath ./Frameworks\
+
 uninstall:
 	@rm -rf $(CTMP)
 	@rm -rf $(OUT)
