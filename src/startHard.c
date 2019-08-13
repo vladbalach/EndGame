@@ -1,5 +1,11 @@
 #include "header.h"
-
+static float randomize(float numb) {
+    srand(time(0));
+    float plus = rand() % 300;
+    numb += numb * (plus / (float)100);
+    
+    return numb;
+}
 //"player" to out winner
 int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_Renderer *renderer) {
     char MAP[HEIGHT_SYMB][WIDTH_SYMB];
@@ -14,8 +20,8 @@ int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_R
     int GAME_STATUS = 0;//
     t_bullet *listBullet = 0;
     // Initialize SDL
-   
-
+    float speedForIteration1 = player1->bulletSpeed;
+    float speedForIteration2 = player2->bulletSpeed;
     //Creating MUSIC channel and adding tracks
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     Mix_Chunk *laser1 = Mix_LoadWAV("music/laser5.wav");
@@ -38,6 +44,14 @@ int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_R
 
     while(running)
     {
+        
+        speedForIteration1 = player1->bulletSpeed;
+        speedForIteration2 = player2->bulletSpeed;
+        if(startTime > 200000) {
+            speedForIteration1 = randomize(player1->bulletSpeed);
+            speedForIteration2 = randomize(player2->bulletSpeed);
+            printf("%10.3f\n", speedForIteration1);
+        }
         //printf("First lose");
         player1->dx = 0;
         player1->dy = 0;
@@ -61,12 +75,15 @@ int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_R
 
         while(SDL_PollEvent(&event)) {
             if (event.type == SDL_KEYUP) {
+                
                 if((event.key.keysym.sym == SDLK_SPACE) && (clock() > cd1 + player1->coolDown)) {
                     cd1 = clock();
+                    //CLOCKS_PER_SEC
                     Mix_PlayChannel(-1,laser1, 0);
                     Mix_Volume(-1, MIX_MAX_VOLUME);
-                    mx_push_front(&listBullet, player1->x, player1->y - 1, 0, -player1->bulletSpeed, &MAP[0][0]);
-                    mx_push_front(&listBullet, player1->cloneX, player1->cloneY + 1, 0, player1->bulletSpeed, &MAP[0][0]);
+                    
+                    mx_push_front(&listBullet, player1->x, player1->y - 1, 0, -speedForIteration1, '-', &MAP[0][0]);
+                    mx_push_front(&listBullet, player1->cloneX, player1->cloneY + 1, 0, speedForIteration1, '-', &MAP[0][0]);
                     break;
                 }
                 
@@ -74,8 +91,8 @@ int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_R
                     cd2 = clock();
                     Mix_PlayChannel(-1,laser1, 0);
                     Mix_Volume(-1, MIX_MAX_VOLUME);
-                    mx_push_front(&listBullet, player2->x, player2->y - 1, 0, -player2->bulletSpeed, &MAP[0][0]);
-                    mx_push_front(&listBullet, player2->cloneX, player2->cloneY + 1, 0, player2->bulletSpeed, &MAP[0][0]);
+                    mx_push_front(&listBullet, player2->x, player2->y - 1, 0, -speedForIteration2, '+', &MAP[0][0]);
+                    mx_push_front(&listBullet, player2->cloneX, player2->cloneY + 1, 0, speedForIteration2, '+', &MAP[0][0]);
                     break;
                 }
                 if(event.key.keysym.sym == SDLK_w) {
@@ -117,8 +134,8 @@ int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_R
         mx_move(player2, &MAP[0][0]);
         drawPlayer(player1, renderer);
         drawPlayer(player2, renderer);
-        redrawMap(renderer, &MAP[0][0]);
-        usleep(1000);
+        redrawMap(renderer,player1, player2, &MAP[0][0]);
+        SDL_Delay(10);
         SDL_RenderPresent(renderer);
     }
    

@@ -12,7 +12,7 @@ int moveBullet(t_bullet **bullet, char *MAP) {
                     tmp->dx = -tmp->dx;
         }
          //printf("y = %d\n", tmp->y) ;
-        if ((*(MAP + WIDTH_SYMB * (int)tmp->y + (int)tmp->x) == '|') && ((int)tmp->y < HEIGHT_SYMB-1))
+        if ((*(MAP + WIDTH_SYMB * (int)tmp->y + (int)tmp->x) == tmp->ch) && ((int)tmp->y < HEIGHT_SYMB-1))
                 *(MAP + WIDTH_SYMB * (int)tmp->y + (int)tmp->x) = ' ';
         if (((int)tmp->y < 1) || ((int)tmp->y > HEIGHT_SYMB - 3))
         {
@@ -29,7 +29,6 @@ int moveBullet(t_bullet **bullet, char *MAP) {
             tmp->y += tmp->dy;
             if ((int)tmp->y > 0)
             {
-                
                 if (*(MAP + WIDTH_SYMB * (int)tmp->y + (int)tmp->x) == 'A') {
                     return -1;//LOSE A
                 } else
@@ -37,8 +36,8 @@ int moveBullet(t_bullet **bullet, char *MAP) {
                      return 1;//LOSE B
                 }
                 if (*(MAP + WIDTH_SYMB * (int)tmp->y + (int)tmp->x) != '1') {
-                    *(MAP + WIDTH_SYMB * (int)tmp->y + (int)tmp->x) = '|';
-                } 
+                    *(MAP + WIDTH_SYMB * (int)tmp->y + (int)tmp->x) = tmp->ch;
+                }
             }
         }
         tmp = tmp->next;

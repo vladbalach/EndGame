@@ -21,12 +21,10 @@ void initPlayers(t_player **player1, t_player **player2) {
     players2->cloneY = 1;
     players2->pathToTexture = (char*) malloc (100);
     players2->pathToTexture = "sprites/playerShip1_blue.png";
+    players1->pathToBullet = "sprites/bull_red.png";
+    players2->pathToBullet = "sprites/bull_blue2.png";
     players1->cloneX = players2->x + 1;
     players2->cloneX = players1->x + 1;
-    players1->pathToBulletTexture = (char*) malloc (100);
-    players1->pathToBulletTexture = "bull_blue2.png";
-    players2->pathToBulletTexture = (char*) malloc (100);
-    players2->pathToBulletTexture = "bull_red.png.png";
     *player1 = players1;
     *player2 = players2;
 }

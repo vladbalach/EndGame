@@ -32,7 +32,7 @@ typedef struct s_player {
     float bulletSpeed; // Скорость снаряда
     int coolDown; //gthезарядка
     char *pathToTexture;
-    char *pathToBulletTexture;
+    char *pathToBullet;
 } t_player;
 
 typedef struct s_bullet {
@@ -42,7 +42,7 @@ typedef struct s_bullet {
     float dy;
     float cloneX;
     float cloneY;
-
+    char ch;
     struct s_bullet *next;
 } t_bullet;
 /*
@@ -58,7 +58,7 @@ b - clone 2
 void drawPlayer(t_player *player, SDL_Renderer *render);
 void mx_move(t_player* player, char *MAP);
 void checkMove(t_player *player, char* mass, int width);
-void redrawMap(SDL_Renderer *render, char* MAP);
+void redrawMap(SDL_Renderer *render, t_player *player1, t_player *player2, char* MAP);
 void drawMap( SDL_Renderer *render, char* MAP);
 void check_x(t_player *player, char* mass, int width);
 void check_y(t_player *player, char* mass, int width);
@@ -77,9 +77,9 @@ int startHard(t_player *player1, t_player *player2, t_player *winPlayer, SDL_Ren
 int endScreen(t_player *player, SDL_Renderer *renderer);
 //BULLETS
 void clearBulletList(t_bullet **list, char* MAP);
-t_bullet *createBullet(float x, float y, float dx, float dy, char *MAP);
+t_bullet *createBullet(float x, float y, float dx, float dy, char ch, char *MAP);
 
-void mx_push_front(t_bullet **list, float x, float y, float dx,float dy, char *MAP) ;
+void mx_push_front(t_bullet **list, float x, float y, float dx,float dy, char ch,  char *MAP);
 int moveBullet(t_bullet **bullet, char *MAP);
 void mx_pop_back(t_bullet **list);
 void mx_pop_index(t_bullet **list, int index);
