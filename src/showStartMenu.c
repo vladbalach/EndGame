@@ -10,11 +10,7 @@ int showStartMenu(SDL_Renderer *renderer, t_player *player1, t_player *player2) 
     }
     
     TTF_Font *font_Customize = TTF_OpenFont("ttf/ofont.ru_Fixedsys.ttf",72);
-    /*if (font_GameName == 0) {
-          printf("%s",TTF_GetError());
-          exit(1);
-    };*/
-
+    
     SDL_Color color = {255, 255, 0, 255};
     //Customize panels
     SDL_Rect button1 = {715, 435, 400, 120};
@@ -77,10 +73,6 @@ int showStartMenu(SDL_Renderer *renderer, t_player *player1, t_player *player2) 
               }
         }
         
-        //SDL_RenderCopy(renderer, imgBorder, NULL, &textRect);
-       
-        //SDL_RenderCopy(renderer, imgBackground, NULL, &backgroundRect);
-        
         SDL_RenderCopy(renderer, imgBackground, NULL, &backgroundRect);
         SDL_RenderCopy(renderer, button11, NULL, &button1);
         SDL_RenderCopy(renderer, button22, NULL, &button2);
@@ -119,7 +111,6 @@ int showStartMenu(SDL_Renderer *renderer, t_player *player1, t_player *player2) 
             drawText(color, 1200, 950, "Customize", renderer, font_Customize);
             drawText(color, 750, 450, "Easy mode", renderer, font_Customize);
         }
-        //drawText(color, 150, 600, "char *text", renderer, font_options);
         usleep(100);
         SDL_RenderPresent(renderer);
     }

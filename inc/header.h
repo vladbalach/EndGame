@@ -72,7 +72,8 @@ void initPlayers(t_player **player1, t_player **player2);
 
 //GENERAL
 void drawText(SDL_Color color, int x, int y, char *text, SDL_Renderer *renderer, TTF_Font *font);
-
+int mx_strcmp(const char *s1, const char *s2);
+char *mx_strcpy(char *dst, const char *src);
 //MAP
 void initMap(char *mass);
 

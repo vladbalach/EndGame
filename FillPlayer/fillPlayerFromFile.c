@@ -156,7 +156,7 @@ void fillplayerFromFile(t_player **player1, t_player **player2) {
                 else while ((status = read(file, &ch, 1)) && ch != '\n') {}
             free(name);
             free(games);
-            free(win);
+            free(win); 
         }
         close(file);
         if(finded == 0) {
@@ -172,5 +172,7 @@ int main() {
     t_player *player1;
     t_player *player2;
     initPlayers(&player1, &player2);
+    player1->name = "Player16";
     fillplayerFromFile(&player1, &player2);
+    printf("%d", player1->win);
 }

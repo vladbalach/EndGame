@@ -30,7 +30,11 @@ SRCS = ./src/main.c \
 	./src/initPlayers.c \
 	./src/startEasy.c \
 	./src/ScoreboardScreen.c \
-	./src/mx_strnew.c
+	./src/mx_strnew.c \
+	./src/fillPlayerFromFile.c \
+	./src/mx_strcmp.c \
+	./src/mx_strcpy.c \
+	./src/rewritePlayer.c
 
 CTMP = 	main.c \
 	newMain.c \
@@ -57,7 +61,11 @@ CTMP = 	main.c \
 	initPlayers.c \
 	startEasy.c \
 	ScoreboardScreen.c \
-	mx_strnew.c
+	mx_strnew.c \
+	fillPlayerFromFile.c \
+	mx_strcmp.c \
+	mx_strcpy.c \
+	rewritePlayer.c
 
 CFLSGS = -std=c11 -Wall -Wextra -Wpedantic -Werror
 
