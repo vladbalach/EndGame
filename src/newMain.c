@@ -59,7 +59,30 @@ int main() {
         }
     }
     if (status == 1) {
-        //EzMode
+        while(status) {
+            status = startEasy(&player1, &player2, winPlayer, renderer);
+            if (status == 0) {
+                break;
+            }
+            if (status == 1){
+                if (player2->health == 0) {
+                    status = endScreen(player1, renderer);
+                    player1->health = 3;
+                    player2->health = 3;
+                }
+                else 
+                    status = startEasy(&player1, &player2, winPlayer, renderer);
+            }
+            if (status == 2) {
+                if (player1->health == 0) {
+                    status = endScreen(player1, renderer);
+                    player1->health = 3;
+                    player2->health = 3;
+                }
+                else 
+                    status = startEasy(&player1, &player2, winPlayer, renderer);
+            }
+        }
     }
     SDL_DestroyWindow(window);
     IMG_Quit();

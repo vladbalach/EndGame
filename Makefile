@@ -27,7 +27,8 @@ SRCS = ./src/main.c \
 	./src/endScreen.c \
 	./src/drawText.c \
 	./src/checkPlayers.c \
-	./src/initPlayers.c
+	./src/initPlayers.c \
+	./src/startEasy.c 
 
 CTMP = 	main.c \
 	newMain.c \
@@ -51,7 +52,8 @@ CTMP = 	main.c \
 	endScreen.c \
 	drawText.c \
 	checkPlayers.c \
-	initPlayers.c
+	initPlayers.c \
+	startEasy.c 
 
 CFLSGS = -std=c11 -Wall -Wextra -Wpedantic -Werror
 
@@ -65,8 +67,8 @@ install:
 	@cp $(SRCS) .
 	@cp $(INC) .
 	@gcc $(CTMP)  -F ./Frameworks -framework SDL2 -rpath ./Frameworks \
-	 -F ./Frameworks -framework SDL2_image -rpath ./Frameworks\
-	 -F ./Frameworks -framework SDL2_ttf -rpath ./Frameworks\
+	 -F ./Frameworks -framework SDL2_image -rpath ./Frameworks \
+	 -F ./Frameworks -framework SDL2_ttf -rpath ./Frameworks \
 	 -F ./Frameworks -framework SDL2_mixer -rpath ./Frameworks
 
 uninstall:
