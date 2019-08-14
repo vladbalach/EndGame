@@ -1,16 +1,6 @@
 #include "header.h"
 
-static int lengthOfint(int num) {
-    int i = 0;
-    while(num > 0) {
-        num /= 10;
-        i++;
-    }
-    return i;
-}
-
 static char* formatedInt(int num) {
-    int len = lengthOfint(num);
     char *str =(char *) malloc (6);
     for (int i = 4;i>=0;i--) {
             str[i] = num % 10 + 48;

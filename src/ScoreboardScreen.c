@@ -3,7 +3,6 @@
 int scoreboard(SDL_Renderer *renderer) {
     bool running = true;
     SDL_Event event;
-    int indexActive = 1;//1 - Ez,2-Hard,3-Cust,4-Score 
     if(TTF_Init()==-1) {
         printf("TTF_Init: %s\n", TTF_GetError());
         exit(2);
@@ -12,7 +11,6 @@ int scoreboard(SDL_Renderer *renderer) {
     TTF_Font *font = TTF_OpenFont("ttf/ofont.ru_Fixedsys.ttf",72);
 
     SDL_Color color = {255, 255, 0, 255};
-    SDL_Color colorG = {0, 255, 0, 255};
     SDL_Color colorGR = {155, 255, 0, 255};
     //Customize panels
 

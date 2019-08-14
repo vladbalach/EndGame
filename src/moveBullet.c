@@ -4,7 +4,6 @@ int moveBullet(t_bullet **bullet, char *MAP) {
     if (*bullet == 0) return 0;
     t_bullet *tmp = *bullet;
     float oneDx = ((int)tmp->dx > 0) ? 1 : (((int)tmp->dx == 0) ? 0 : -1);
-    float oneDy = ((int)tmp->dy > 0) ? 1 : (((int)tmp->dy == 0) ? 0 : -1);
     int index = 0;
     while (tmp) {
         if (*(MAP + WIDTH_SYMB * (int)tmp->y  + (int)tmp->x + (int)oneDx) == '0') {

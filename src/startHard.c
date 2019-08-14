@@ -1,14 +1,5 @@
 #include "header.h"
 
-static float randomize(float numb) {
-    //srand(time(0));
-    float plus = rand() % 300;
-    numb += numb * (plus / (float)100);
-    
-    return numb;
-}
-
-
 int startHard(t_player **player11, t_player **player21, t_player *winPlayer, SDL_Renderer *renderer) {
     char MAP[HEIGHT_SYMB][WIDTH_SYMB];
     clock_t startTime, cd1, cd2;
@@ -41,9 +32,6 @@ int startHard(t_player **player11, t_player **player21, t_player *winPlayer, SDL
     Mix_PlayMusic(backgroundHard, -1);
     Mix_VolumeMusic(24);
     SDL_Event event;
-    SDL_Rect rectPlayer1 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
-    SDL_Rect rectPlayer2 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
-    SDL_Rect rect = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     initMap(&MAP[0][0]);
     // Hearts Bar!
     SDL_Rect player1_heart1 = {10, 1210, 96, 32};
@@ -90,16 +78,12 @@ int startHard(t_player **player11, t_player **player21, t_player *winPlayer, SDL
             if(GAME_STATUS == -1) {
                 player2->win = player2->win +1;
                 player1->health = (player1->health) - 1;
-                printf("First lose");
-                printf("%i",player1->health);
                 winPlayer = player2;
                 return 2;
             }
             if(GAME_STATUS == 1) {
                 player1->win = player1->win +1;
                 player2->health = (player2->health) - 1;
-                printf("Second lose");
-                printf("%i", player2->health);
                 winPlayer = player1;
                 return 1;
             }

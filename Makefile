@@ -1,4 +1,4 @@
-NAME = EndGame
+NAME = endgame
 
 INC = inc/header.h 
 
@@ -70,15 +70,11 @@ CTMP = 	main.c \
 CFLSGS = -std=c11 -Wall -Wextra -Wpedantic -Werror
 
 all: install uninstall
-all2:
-	@gcc $(CTMP2)  -F ./Frameworks -framework SDL2 -rpath ./Frameworks \
-	 -F ./Frameworks -framework SDL2_image -rpath ./Frameworks \
-	 -F ./Frameworks -framework SDL2_ttf -rpath ./Frameworks \
-	 -F ./Frameworks -framework SDL2_mixer -rpath ./Frameworks
+
 install:
 	@cp $(SRCS) .
 	@cp $(INC) .
-	@gcc $(CTMP)  -F ./Frameworks -framework SDL2 -rpath ./Frameworks \
+	@clang $(CFLSGS) -o $(NAME) $(CTMP)  -F ./Frameworks -framework SDL2 -rpath ./Frameworks \
 	 -F ./Frameworks -framework SDL2_image -rpath ./Frameworks \
 	 -F ./Frameworks -framework SDL2_ttf -rpath ./Frameworks \
 	 -F ./Frameworks -framework SDL2_mixer -rpath ./Frameworks

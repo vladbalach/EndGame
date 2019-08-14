@@ -1,14 +1,5 @@
 #include "header.h"
 
-static float randomize(float numb) {
-    //srand(time(0));
-    float plus = rand() % 300;
-    numb += numb * (plus / (float)100);
-    
-    return numb;
-}
-
-
 int startEasy(t_player **player11, t_player **player21, t_player *winPlayer, SDL_Renderer *renderer) {
     char MAP[HEIGHT_SYMB][WIDTH_SYMB];
     clock_t startTime, cd1, cd2;
@@ -32,7 +23,7 @@ int startEasy(t_player **player11, t_player **player21, t_player *winPlayer, SDL
     player2->cloneX = player1->x + 1;
     player1->cloneY = 1;
     player2->cloneY = 1;
-    player2->coolDown = player1->coolDown  = 120000;
+    player2->coolDown = player1->coolDown  = 250000;
     // player1->health = player1->health;
     // player2->health = player2->health;
     //Creating MUSIC channel and adding tracks
@@ -47,9 +38,6 @@ int startEasy(t_player **player11, t_player **player21, t_player *winPlayer, SDL
     Mix_PlayMusic(backgroundHard, -1);
     Mix_VolumeMusic(24);
     SDL_Event event;
-    SDL_Rect rectPlayer1 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
-    SDL_Rect rectPlayer2 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
-    SDL_Rect rect = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     initMap(&MAP[0][0]);
     // Hearts Bar!
     SDL_Rect player1_heart1 = {10, 1210, 96, 32};
@@ -74,8 +62,6 @@ int startEasy(t_player **player11, t_player **player21, t_player *winPlayer, SDL
         GAME_STATUS = moveBullet(&listBullet,&MAP[0][0]);
         if(GAME_STATUS == -1) {
             player1->health = (player1->health) - 1;
-            printf("First lose");
-            printf("%i",player1->health);
             winPlayer = player2;
             SDL_DestroyTexture(imgB);
             SDL_DestroyTexture(player1_heart11);
@@ -93,8 +79,6 @@ int startEasy(t_player **player11, t_player **player21, t_player *winPlayer, SDL
         }
         if(GAME_STATUS == 1) {
             player2->health = (player2->health) - 1;
-            printf("Second lose");
-            printf("%i",player2->health);
             winPlayer = player1;
             SDL_DestroyTexture(imgB);
             SDL_DestroyTexture(player1_heart11);

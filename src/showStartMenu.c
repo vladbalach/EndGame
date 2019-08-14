@@ -1,6 +1,6 @@
 #include "header.h"
 
-int showStartMenu(SDL_Renderer *renderer, t_player *player1, t_player *player2) {
+int showStartMenu(SDL_Renderer *renderer) {
     bool running = true;
     SDL_Event event;
     int indexActive = 1;//1 - Ez,2-Hard,3-Cust,4-Score 

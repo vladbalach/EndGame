@@ -14,14 +14,5 @@ void clearBulletList(t_bullet **list, char* MAP) {
         tmp->next=0;
         tmp = *list;
     }
-    //(*list)->dy = 100;
-    //free(*list);
-    //free(list);
-    //tmp = NULL;
-    //tmp = *list;
-    //if(*(MAP + WIDTH_SYMB * (int)tmp->y  + (int)tmp->x) == '|') {
-    //        *(MAP + WIDTH_SYMB * (int)tmp->y  + (int)tmp->x) = ' ';
-    //    }
-    //tmp->next = 0;
-    //free(*list);
+
 }
