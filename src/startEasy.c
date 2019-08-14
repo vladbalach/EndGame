@@ -32,6 +32,7 @@ int startEasy(t_player **player11, t_player **player21, t_player *winPlayer, SDL
     player2->cloneX = player1->x + 1;
     player1->cloneY = 1;
     player2->cloneY = 1;
+    player2->coolDown = player1->coolDown  = 120000;
     // player1->health = player1->health;
     // player2->health = player2->health;
     //Creating MUSIC channel and adding tracks
@@ -66,18 +67,6 @@ int startEasy(t_player **player11, t_player **player21, t_player *winPlayer, SDL
     SDL_Texture *player2_heart33 = IMG_LoadTexture(renderer, "sprites/two_grey.png");
     while(running)
     {
-       
-         speedForIteration1 = player1->bulletSpeed;
-         speedForIteration2 = player2->bulletSpeed;
-        // if(50000000 < clock() - startTime) {
-        //      //printf("%lu\n", startTime);
-        //     speedForIteration1 = randomize(player1->bulletSpeed);
-        //     speedForIteration2 = randomize(player2->bulletSpeed);
-            
-        // }
-       speedForIteration1 = player1->bulletSpeed + ((float)clock() - (float)startTime)/(float)100000000;
-       speedForIteration2 = player2->bulletSpeed + ((float)clock() - (float)startTime)/(float)100000000;
-      // printf("%float\n", speedForIteration1);
         player1->dx = 0;
         player1->dy = 0;
         player2->dx = 0;

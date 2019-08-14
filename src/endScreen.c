@@ -34,10 +34,10 @@ int endScreen(t_player *player, SDL_Renderer *renderer) {
     while(running) {
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, imgBackground, NULL, &backgroundRect);
-    SDL_RenderCopy(renderer, imgAgainBackground, NULL, &againBackground);
-    SDL_RenderCopy(renderer, imgQuitBackground, NULL, &quitBackground);
-        
-        drawText(color, 600, 100, player->name, renderer,font);
+        SDL_RenderCopy(renderer, imgAgainBackground, NULL, &againBackground);
+        SDL_RenderCopy(renderer, imgQuitBackground, NULL, &quitBackground);
+        drawText(color, 600, 100, "WINNER:", renderer,font);
+        drawText(color, 790, 100, player->name, renderer,font);
         while(SDL_PollEvent(&event)) {
             if (event.type == SDL_KEYUP) { 
                 if(event.key.keysym.sym == SDLK_ESCAPE) {
@@ -62,9 +62,6 @@ int endScreen(t_player *player, SDL_Renderer *renderer) {
             if (indexActive == 0) {
                 SDL_RenderCopy(renderer, border22, NULL, &border2);
             }
-            
-        
-       
         usleep(100);
         SDL_RenderPresent(renderer);
     }

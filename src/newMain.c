@@ -1,22 +1,5 @@
 #include "header.h"
 
-/*void gameFunc() {
-    player1, player2;
-    int gameMod = 0;//1 - Отдых; 2 - Соревнование
-    gameMod = showStartMenu();
-    gameStart(int mode);//
-    gameEnd()
-}
-
-void gameStart(int mode) {
-    if(mode == 1) {
-        startChill();
-    }
-    if(mode == 2) {
-        startHard();
-    }
-}*/
-
 int main() {
     int status = 4;//0 - exit; 1 - continue
     SDL_Init(SDL_INIT_VIDEO);
