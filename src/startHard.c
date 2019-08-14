@@ -9,23 +9,31 @@ static float randomize(float numb) {
 }
 
 
-int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_Renderer *renderer) {
+int startHard(t_player **player11, t_player **player21, t_player *winPlayer, SDL_Renderer *renderer) {
     char MAP[HEIGHT_SYMB][WIDTH_SYMB];
     clock_t startTime, cd1, cd2;
     startTime = clock();
     cd1 = clock();
     cd2 = clock();
-    t_player *player1 = 0; 
-    t_player *player2 = 0;
-    initPlayers(&player1, &player2);
+    t_player *player1 = *player11; 
+    t_player *player2 = *player21;
+    // initPlayers(&player1, &player2);
     //timerTo
     int GAME_STATUS = 0;//
     t_bullet *listBullet = 0;
     // Initialize SDL
     float speedForIteration1 = player1->bulletSpeed;
     float speedForIteration2 = player2->bulletSpeed;
-    player1->health = 3;
-    player2->health = 3;
+    player2->x = WIDTH_SYMB / 4 * 3 - 1;
+    player2->y = HEIGHT_SYMB - 2;
+    player1->x = WIDTH_SYMB / 4 - 1;
+    player1->y =  HEIGHT_SYMB - 2;
+    player1->cloneX = player2->x + 1;
+    player2->cloneX = player1->x + 1;
+    player1->cloneY = 1;
+    player2->cloneY = 1;
+    // player1->health = player1->health;
+    // player2->health = player2->health;
     //Creating MUSIC channel and adding tracks
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     Mix_Chunk *laser1 = Mix_LoadWAV("music/laser5.wav");
@@ -42,8 +50,20 @@ int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_R
     SDL_Rect rectPlayer2 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     SDL_Rect rect = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     initMap(&MAP[0][0]);
-    SDL_Texture *imgBorder = IMG_LoadTexture(renderer, "sprites/crate_01.png");
-    SDL_RenderCopy(renderer, imgBorder, NULL, &rect);
+    // Hearts Bar!
+    SDL_Rect player1_heart1 = {10, 1210, 96, 32};
+    SDL_Texture *player1_heart11 = IMG_LoadTexture(renderer, "sprites/full_bar.png");
+    SDL_Rect player1_heart2 = {10, 1210, 96, 32};
+    SDL_Texture *player1_heart22 = IMG_LoadTexture(renderer, "sprites/one_grey.png");
+    SDL_Rect player1_heart3 = {10, 1210, 96, 32};
+    SDL_Texture *player1_heart33 = IMG_LoadTexture(renderer, "sprites/two_grey.png");
+    // Player 2 heartbar
+    SDL_Rect player2_heart1 = {1820, 1210, 96, 32};
+    SDL_Texture *player2_heart11 = IMG_LoadTexture(renderer, "sprites/full_bar.png");
+    SDL_Rect player2_heart2 = {1820, 1210, 96, 32};
+    SDL_Texture *player2_heart22 = IMG_LoadTexture(renderer, "sprites/one_grey.png");
+    SDL_Rect player2_heart3 = {1820, 1210, 96, 32};
+    SDL_Texture *player2_heart33 = IMG_LoadTexture(renderer, "sprites/two_grey.png");
     while(running)
     {
        
@@ -57,7 +77,7 @@ int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_R
         // }
        speedForIteration1 = player1->bulletSpeed + ((float)clock() - (float)startTime)/(float)100000000;
        speedForIteration2 = player2->bulletSpeed + ((float)clock() - (float)startTime)/(float)100000000;
-       printf("%float\n", speedForIteration1);
+      // printf("%float\n", speedForIteration1);
         player1->dx = 0;
         player1->dy = 0;
         player2->dx = 0;
@@ -68,6 +88,18 @@ int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_R
             printf("First lose");
             printf("%i",player1->health);
             winPlayer = player2;
+            SDL_DestroyTexture(imgB);
+            SDL_DestroyTexture(player1_heart11);
+            SDL_DestroyTexture(player1_heart22);
+            SDL_DestroyTexture(player1_heart33);
+            SDL_DestroyTexture(player2_heart11);
+            SDL_DestroyTexture(player2_heart22);
+            SDL_DestroyTexture(player2_heart33);
+            clearBulletList(&listBullet, &MAP[0][0]);
+            Mix_FreeMusic(backgroundHard);
+            Mix_FreeChunk(laser1);
+            Mix_FreeChunk(laser2);
+            Mix_CloseAudio();
             return 2;
         }
         if(GAME_STATUS == 1) {
@@ -75,12 +107,38 @@ int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_R
             printf("Second lose");
             printf("%i",player2->health);
             winPlayer = player1;
+            SDL_DestroyTexture(imgB);
+            SDL_DestroyTexture(player1_heart11);
+            SDL_DestroyTexture(player1_heart22);
+            SDL_DestroyTexture(player1_heart33);
+            SDL_DestroyTexture(player2_heart11);
+            SDL_DestroyTexture(player2_heart22);
+            SDL_DestroyTexture(player2_heart33);
+            clearBulletList(&listBullet, &MAP[0][0]);
+            Mix_FreeMusic(backgroundHard);
+            Mix_FreeChunk(laser1);
+            Mix_FreeChunk(laser2);
+            Mix_CloseAudio();
             return 1;
         }
 
         SDL_RenderClear(renderer);
         SDL_Rect rect3 = {0, 0, WIDTH_SYMB * SIZE_OF_SYMBOL, HEIGHT_SYMB * SIZE_OF_SYMBOL};
         SDL_RenderCopy(renderer, imgB, NULL, &rect3);
+        // Rendering of health bar player 1;
+        if (player1->health == 3)
+        SDL_RenderCopy(renderer, player1_heart11, NULL, &player1_heart1);
+        if (player1->health == 2)
+        SDL_RenderCopy(renderer, player1_heart22, NULL, &player1_heart2);
+        if (player1->health == 1)
+        SDL_RenderCopy(renderer, player1_heart33, NULL, &player1_heart3);
+         // Rendering of health bar player 2;
+        if (player2->health == 3)
+        SDL_RenderCopy(renderer, player2_heart11, NULL, &player2_heart1);
+        if (player2->health == 2)
+        SDL_RenderCopy(renderer, player2_heart22, NULL, &player2_heart2);
+        if (player2->health == 1)
+        SDL_RenderCopy(renderer, player2_heart33, NULL, &player2_heart3);
 
         while(SDL_PollEvent(&event)) {
             if (event.type == SDL_KEYUP) {
@@ -145,8 +203,16 @@ int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_R
         redrawMap(renderer,player1, player2, &MAP[0][0]);
         SDL_Delay(10);
         SDL_RenderPresent(renderer);
+       
     }
-   
+
+    SDL_DestroyTexture(imgB);
+    SDL_DestroyTexture(player1_heart11);
+    SDL_DestroyTexture(player1_heart22);
+    SDL_DestroyTexture(player1_heart33);
+    SDL_DestroyTexture(player2_heart11);
+    SDL_DestroyTexture(player2_heart22);
+    SDL_DestroyTexture(player2_heart33);
     clearBulletList(&listBullet, &MAP[0][0]);
     Mix_FreeMusic(backgroundHard);
     Mix_FreeChunk(laser1);

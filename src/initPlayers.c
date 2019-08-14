@@ -33,6 +33,8 @@ void initPlayers(t_player **player1, t_player **player2) {
     players1->name = (char*) malloc (100);
     players1->name = "Player1";
     players2->name = "Player2";
+    players1->health = 3;
+    players2->health = 3;
     *player1 = players1;
     *player2 = players2;
 }

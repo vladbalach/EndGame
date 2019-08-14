@@ -68,7 +68,12 @@ int endScreen(t_player *player, SDL_Renderer *renderer) {
         usleep(100);
         SDL_RenderPresent(renderer);
     }
-    
+    SDL_DestroyTexture(border11);
+    SDL_DestroyTexture(border22);
+    SDL_DestroyTexture(imgBackground);
+    SDL_DestroyTexture(imgAgainBackground);
+    SDL_DestroyTexture(imgQuitBackground);
+
     IMG_Quit();
     return 0;
 }

@@ -34,14 +34,28 @@ int main() {
     mx_checkPlayers(/*t_player *player, t_player *player2,*/renderer);
     if (status == 2) {
         while(status) {
-            status = startHard(player1, player2, winPlayer, renderer);
+            status = startHard(&player1, &player2, winPlayer, renderer);
             if (status == 0) {
                 break;
             }
-            if (status == 1)
-                status = endScreen(player1, renderer);
-            if (status == 2)
-                status = endScreen(player2, renderer);
+            if (status == 1){
+                if (player2->health == 0) {
+                    status = endScreen(player1, renderer);
+                    player1->health = 3;
+                    player2->health = 3;
+                }
+                else 
+                    status = startHard(&player1, &player2, winPlayer, renderer);
+            }
+            if (status == 2) {
+                if (player1->health == 0) {
+                    status = endScreen(player1, renderer);
+                    player1->health = 3;
+                    player2->health = 3;
+                }
+                else 
+                    status = startHard(&player1, &player2, winPlayer, renderer);
+            }
         }
     }
     if (status == 1) {
