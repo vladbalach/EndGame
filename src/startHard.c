@@ -29,7 +29,7 @@ int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_R
     Mix_Music *backgroundHard = Mix_LoadMUS("music/Orbital Colossus.mp3");
 
     // Create a renderer (accelerated and in sync with the display refresh rate)
-    SDL_Texture *imgB = IMG_LoadTexture(renderer, "sprites/black.png");
+    SDL_Texture *imgB = IMG_LoadTexture(renderer, "sprites/newback1.png");
     bool running = true;
     Mix_PlayMusic(backgroundHard, -1);
     Mix_VolumeMusic(24);
@@ -38,7 +38,7 @@ int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_R
     SDL_Rect rectPlayer2 = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     SDL_Rect rect = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
     initMap(&MAP[0][0]);
-    SDL_Texture *imgBorder = IMG_LoadTexture(renderer, "sprites/crate_01.png");
+    SDL_Texture *imgBorder = IMG_LoadTexture(renderer, "sprites/transparent-square-tiles.png");
     SDL_RenderCopy(renderer, imgBorder, NULL, &rect);
     ///TTF
 

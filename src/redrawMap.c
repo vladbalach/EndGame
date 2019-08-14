@@ -2,7 +2,7 @@
 
 void redrawMap(SDL_Renderer *render, t_player *player1, t_player *player2, char* MAP) {
      SDL_Rect rect = {0, 0, SIZE_OF_SYMBOL, SIZE_OF_SYMBOL};
-    SDL_Texture *imgBorder = IMG_LoadTexture(render, "sprites/border2.png");
+    SDL_Texture *imgBorder = IMG_LoadTexture(render, "sprites/transparent-square-tiles.png");
     SDL_Texture *redBullet = IMG_LoadTexture(render, player1->pathToBullet);
     SDL_Texture *blueBullet = IMG_LoadTexture(render, player2->pathToBullet);
     for (int i = 0; i < HEIGHT_SYMB; i++){
