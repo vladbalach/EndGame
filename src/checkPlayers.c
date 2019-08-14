@@ -22,7 +22,7 @@ static void keybords(int *x1, int *x2, int *y1, int *y2, int *running) {
                 if(event.key.keysym.sym == SDLK_LEFT) 
                    if (*y2 > 0) *y2 = *y2 - 1;
                 if(event.key.keysym.sym == SDLK_RETURN) *running = 3;
-                if(event.key.keysym.sym == SDLK_ESCAPE)  *running = 0;
+                if(event.key.keysym.sym == SDLK_ESCAPE)  *running = 6;
             }
     }
 }

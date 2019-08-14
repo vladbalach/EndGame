@@ -12,7 +12,8 @@ int main() {
     t_player *player2 = 0;
     t_player *winPlayer = 0;
     initPlayers(&player1, &player2);
-    while (status != 0) {
+    while (status == 4 || status == 3) {
+        SDL_ShowCursor (0);
         status = showStartMenu(renderer, player1, player2);
         if (status == 3)
     status = mx_checkPlayers(&player1, &player2, renderer);
@@ -20,11 +21,11 @@ int main() {
             scoreboard(renderer);
         }
     }
-   if (status == 3)
+  /* if (status == 3)
     status = mx_checkPlayers(&player1, &player2, renderer);
     if(status == 4) {
        scoreboard(renderer);
-    }
+    }*/
     if (status == 2) {
         while(status) {
             status = startHard(&player1, &player2, winPlayer, renderer);
