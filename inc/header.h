@@ -87,7 +87,6 @@ int endScreen(t_player *player, SDL_Renderer *renderer);
 void clearBulletList(t_bullet **list, char* MAP);
 t_bullet *createBullet(float x, float y, float dx, float dy, char ch, char *MAP);
 
-
 char *mx_strnew(const int size);
 void mx_push_front(t_bullet **list, float x, float y, float dx,float dy, char ch,  char *MAP);
 int moveBullet(t_bullet **bullet, char *MAP);

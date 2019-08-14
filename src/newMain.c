@@ -18,7 +18,7 @@ void gameStart(int mode) {
 }*/
 
 int main() {
-    int status = 1;//0 - exit; 1 - continue
+    int status = 4;//0 - exit; 1 - continue
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window *window = 
     SDL_CreateWindow("Hello, SDL2", SDL_WINDOWPOS_UNDEFINED, 
@@ -29,11 +29,16 @@ int main() {
     t_player *player2 = 0;
     t_player *winPlayer = 0;
     initPlayers(&player1, &player2);
-     status = showStartMenu(renderer, player1, player2);
+    while (status == 4) {
+        status = showStartMenu(renderer, player1, player2);
+        if(status == 4) {
+            scoreboard(renderer);
+        }
+    }
    if (status == 3)
     mx_checkPlayers(/*t_player *player, t_player *player2,*/renderer);
     if(status == 4) {
-        scoreboard(renderer);
+       scoreboard(renderer);
     }
     if (status == 2) {
         while(status) {

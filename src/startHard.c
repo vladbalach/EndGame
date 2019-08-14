@@ -17,11 +17,8 @@ int startHard(t_player **player11, t_player **player21, t_player *winPlayer, SDL
     cd2 = clock();
     t_player *player1 = *player11; 
     t_player *player2 = *player21;
-    // initPlayers(&player1, &player2);
-    //timerTo
     int GAME_STATUS = 0;//
     t_bullet *listBullet = 0;
-    // Initialize SDL
     float speedForIteration1 = player1->bulletSpeed;
     float speedForIteration2 = player2->bulletSpeed;
     player2->x = WIDTH_SYMB / 4 * 3 - 1;
@@ -32,8 +29,6 @@ int startHard(t_player **player11, t_player **player21, t_player *winPlayer, SDL
     player2->cloneX = player1->x + 1;
     player1->cloneY = 1;
     player2->cloneY = 1;
-    // player1->health = player1->health;
-    // player2->health = player2->health;
     //Creating MUSIC channel and adding tracks
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     Mix_Chunk *laser1 = Mix_LoadWAV("music/laser5.wav");
@@ -69,12 +64,6 @@ int startHard(t_player **player11, t_player **player21, t_player *winPlayer, SDL
        
          speedForIteration1 = player1->bulletSpeed;
          speedForIteration2 = player2->bulletSpeed;
-        // if(50000000 < clock() - startTime) {
-        //      //printf("%lu\n", startTime);
-        //     speedForIteration1 = randomize(player1->bulletSpeed);
-        //     speedForIteration2 = randomize(player2->bulletSpeed);
-            
-        // }
        speedForIteration1 = player1->bulletSpeed + ((float)clock() - (float)startTime)/(float)100000000;
        speedForIteration2 = player2->bulletSpeed + ((float)clock() - (float)startTime)/(float)100000000;
       // printf("%float\n", speedForIteration1);
@@ -83,12 +72,8 @@ int startHard(t_player **player11, t_player **player21, t_player *winPlayer, SDL
         player2->dx = 0;
         player2->dy = 0;
         GAME_STATUS = moveBullet(&listBullet,&MAP[0][0]);
-        if(GAME_STATUS == -1) {
-            player1->health = (player1->health) - 1;
-            printf("First lose");
-            printf("%i",player1->health);
-            winPlayer = player2;
-            SDL_DestroyTexture(imgB);
+        if((GAME_STATUS == 1) || (GAME_STATUS == -1)) {
+                SDL_DestroyTexture(imgB);
             SDL_DestroyTexture(player1_heart11);
             SDL_DestroyTexture(player1_heart22);
             SDL_DestroyTexture(player1_heart33);
@@ -100,26 +85,24 @@ int startHard(t_player **player11, t_player **player21, t_player *winPlayer, SDL
             Mix_FreeChunk(laser1);
             Mix_FreeChunk(laser2);
             Mix_CloseAudio();
-            return 2;
-        }
-        if(GAME_STATUS == 1) {
-            player2->health = (player2->health) - 1;
-            printf("Second lose");
-            printf("%i",player2->health);
-            winPlayer = player1;
-            SDL_DestroyTexture(imgB);
-            SDL_DestroyTexture(player1_heart11);
-            SDL_DestroyTexture(player1_heart22);
-            SDL_DestroyTexture(player1_heart33);
-            SDL_DestroyTexture(player2_heart11);
-            SDL_DestroyTexture(player2_heart22);
-            SDL_DestroyTexture(player2_heart33);
-            clearBulletList(&listBullet, &MAP[0][0]);
-            Mix_FreeMusic(backgroundHard);
-            Mix_FreeChunk(laser1);
-            Mix_FreeChunk(laser2);
-            Mix_CloseAudio();
-            return 1;
+            player2->games = player2->games + 1;
+            player1->games = player1->games + 1;
+            if(GAME_STATUS == -1) {
+                player2->win = player2->win +1;
+                player1->health = (player1->health) - 1;
+                printf("First lose");
+                printf("%i",player1->health);
+                winPlayer = player2;
+                return 2;
+            }
+            if(GAME_STATUS == 1) {
+                player1->win = player1->win +1;
+                player2->health = (player2->health) - 1;
+                printf("Second lose");
+                printf("%i", player2->health);
+                winPlayer = player1;
+                return 1;
+            }
         }
 
         SDL_RenderClear(renderer);
