@@ -38,6 +38,7 @@ typedef struct s_player {
     char *name;
     char *pathToTexture;
     char *pathToBullet;
+    int health;
 } t_player;
 
 typedef struct s_bullet {

@@ -24,6 +24,8 @@ int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_R
     // Initialize SDL
     float speedForIteration1 = player1->bulletSpeed;
     float speedForIteration2 = player2->bulletSpeed;
+    player1->health = 3;
+    player2->health = 3;
     //Creating MUSIC channel and adding tracks
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     Mix_Chunk *laser1 = Mix_LoadWAV("music/laser5.wav");
@@ -62,12 +64,16 @@ int startHard(t_player *player11, t_player *player21, t_player *winPlayer, SDL_R
         player2->dy = 0;
         GAME_STATUS = moveBullet(&listBullet,&MAP[0][0]);
         if(GAME_STATUS == -1) {
+            player1->health = (player1->health) - 1;
             printf("First lose");
+            printf("%i",player1->health);
             winPlayer = player2;
             return 2;
         }
         if(GAME_STATUS == 1) {
+            player2->health = (player2->health) - 1;
             printf("Second lose");
+            printf("%i",player2->health);
             winPlayer = player1;
             return 1;
         }
