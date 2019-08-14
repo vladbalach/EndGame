@@ -5,6 +5,8 @@
 #include <unistd.h> 
 #include <stdbool.h>
 #include <time.h>
+#include <fcntl.h>
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -31,6 +33,8 @@ typedef struct s_player {
     char chClone;
     float bulletSpeed; // Скорость снаряда
     int coolDown; //gthезарядка
+    int games;
+    int win;
     char *name;
     char *pathToTexture;
     char *pathToBullet;
