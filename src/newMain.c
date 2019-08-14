@@ -15,8 +15,8 @@ int main() {
     while (status == 4 || status == 3) {
         SDL_ShowCursor (0);
         status = showStartMenu(renderer, player1, player2);
-        if (status == 3)
-    status = mx_checkPlayers(&player1, &player2, renderer);
+     //   if (status == 3)
+    //status = mx_checkPlayers(&player1, &player2, renderer);
         if(status == 4) {
             scoreboard(renderer);
         }
