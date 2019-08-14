@@ -80,7 +80,7 @@ void initMap(char *mass);
 //SCREENS
 int scoreboard(SDL_Renderer *renderer);
 int showStartMenu(SDL_Renderer *renderer, t_player *player1, t_player *player2);
-void mx_checkPlayers(/*t_player *player, t_player *player2, *//*SDL_Window *window*/SDL_Renderer *renderer);
+int mx_checkPlayers(t_player **player, t_player **player2, SDL_Renderer *renderer);
 int startHard(t_player **player1, t_player **player2, t_player *winPlayer, SDL_Renderer *renderer);
 int startEasy(t_player **player11, t_player **player21, t_player *winPlayer, SDL_Renderer *renderer);
 int endScreen(t_player *player, SDL_Renderer *renderer);

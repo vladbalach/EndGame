@@ -19,7 +19,7 @@ int main() {
         }
     }
    if (status == 3)
-    mx_checkPlayers(/*t_player *player, t_player *player2,*/renderer);
+    status = mx_checkPlayers(&player1, &player2,renderer);
     if(status == 4) {
        scoreboard(renderer);
     }

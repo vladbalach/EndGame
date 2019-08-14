@@ -21,70 +21,152 @@ static void keybords(int *x1, int *x2, int *y1, int *y2, int *running) {
                    if (*x2 < 3) *x2 = *x2 + 1;
                 if(event.key.keysym.sym == SDLK_LEFT) 
                    if (*y2 > 0) *y2 = *y2 - 1;
-                if(event.key.keysym.sym == SDLK_ESCAPE) *running = 0;
+                if(event.key.keysym.sym == SDLK_RETURN) *running = 3;
+                if(event.key.keysym.sym == SDLK_ESCAPE)  *running = 0;
             }
-            if(event.type == SDLK_KP_ENTER)  *running = 1;
     }
 }
 
 void printfRect(int x, int y, int w, int d, char *s, SDL_Renderer *renderer) {
-    SDL_Rect rect = {(x * SIZE_OF_SYMBOL), (y * SIZE_OF_SYMBOL) , (w * SIZE_OF_SYMBOL),  (d * SIZE_OF_SYMBOL)};
-    SDL_Rect rect2 = {((x * 4) * SIZE_OF_SYMBOL), (y * SIZE_OF_SYMBOL) , (w * SIZE_OF_SYMBOL),  (d *SIZE_OF_SYMBOL)};
+    SDL_Rect rect = {(x * SIZE_OF_SYMBOL + 20), (y * SIZE_OF_SYMBOL + 20) , (w * SIZE_OF_SYMBOL - 40),  (d * SIZE_OF_SYMBOL - 40)};
+    SDL_Rect rect2 = {((x * 4) * SIZE_OF_SYMBOL + 20), (y * SIZE_OF_SYMBOL + 20) , (w * SIZE_OF_SYMBOL - 40),  (d *SIZE_OF_SYMBOL - 40)};
     SDL_Texture *imgBorder = IMG_LoadTexture(renderer, s);
     SDL_RenderCopy(renderer, imgBorder, NULL, &rect);
     SDL_RenderCopy(renderer, imgBorder, NULL, &rect2);
+    SDL_DestroyTexture(imgBorder);
 }
 
 void printfRect2(int x, int y, int w, int d, char *s, SDL_Renderer *renderer) {
-    SDL_Rect rect = {(x * SIZE_OF_SYMBOL), (y * SIZE_OF_SYMBOL) , (w * SIZE_OF_SYMBOL), (d * SIZE_OF_SYMBOL)};
-    SDL_Rect rect2 = {((x + 27) * SIZE_OF_SYMBOL), (y * SIZE_OF_SYMBOL) , (w * SIZE_OF_SYMBOL), (d * SIZE_OF_SYMBOL)};
+    SDL_Rect rect = {(x * SIZE_OF_SYMBOL +20), (y * SIZE_OF_SYMBOL+20) , (w * SIZE_OF_SYMBOL-40), (d * SIZE_OF_SYMBOL -40)};
+    SDL_Rect rect2 = {((x + 27) * SIZE_OF_SYMBOL+20), (y * SIZE_OF_SYMBOL+20) , (w * SIZE_OF_SYMBOL-40), (d * SIZE_OF_SYMBOL-40)};
     SDL_Texture *imgBorder = IMG_LoadTexture(renderer, s);
     SDL_RenderCopy(renderer, imgBorder, NULL, &rect);
     SDL_RenderCopy(renderer, imgBorder, NULL, &rect2);
+    SDL_DestroyTexture(imgBorder);
 }
 
 void printfRect3(int x, int y, int w, int d, char *s, SDL_Renderer *renderer) {
     SDL_Rect rect = {(x * SIZE_OF_SYMBOL), (y * SIZE_OF_SYMBOL) , (w * SIZE_OF_SYMBOL),  (d * SIZE_OF_SYMBOL)};
     SDL_Texture *imgBorder = IMG_LoadTexture(renderer, s);
     SDL_RenderCopy(renderer, imgBorder, NULL, &rect);
+    SDL_DestroyTexture(imgBorder);
 }
 
 void mx_print(char **l,char**s,int *x, int *y, SDL_Renderer *renderer){
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    printfRect(9,3,12,4,s[0],renderer);
-    printfRect(9,9,12,4,s[1],renderer);
-    printfRect(9,15,12,4,s[2],renderer);
-    printfRect(9,21,12,4,s[3],renderer);
-    printfRect2(9,27,4,4,l[0],renderer);
+    printfRect3(0, 0, WIDTH_SYMB, HEIGHT_SYMB, s[4],renderer);
+    printfRect(9, 5,12,4,s[0],renderer);
+    printfRect(9,11,12,4,s[1],renderer);
+    printfRect(9, 16,12,4,s[2],renderer);
+    printfRect(9, 21,12,4,s[3],renderer);
+    printfRect2(9, 27,4,4,l[0],renderer);
     printfRect2(17,27,4,4,l[1],renderer);
-    if (x[0] == 0) printfRect3(9,3,12,4,l[2],renderer);
-    if (x[0] == 1) printfRect3(9,9,12,4,l[2],renderer);
-    if (x[0] == 2) printfRect3(9,15,12,4,l[2],renderer);
+    if (x[0] == 0) printfRect3(9,5,12,4,l[2],renderer);
+    if (x[0] == 1) printfRect3(9,11,12,4,l[2],renderer);
+    if (x[0] == 2) printfRect3(9,16,12,4,l[2],renderer);
     if (x[0] == 3) printfRect3(9,21,12,4,l[2],renderer);
-    if (x[1] == 0) printfRect3(36,3,12,4,l[2],renderer);
-    if (x[1] == 1) printfRect3(36,9,12,4,l[2],renderer);
-    if (x[1] == 2) printfRect3(36,15,12,4,l[2],renderer);
-    if (x[1] == 3) printfRect3(36,21,12,4,l[2],renderer);
-    if (y[0] == 0) printfRect3(9,27,4,4,l[2],renderer);
-    if (y[1] == 0) printfRect3(36,27,4,4,l[2],renderer);
-    if (y[0] == 1) printfRect3(17,27,4,4,l[2],renderer);
-    if (y[1] == 1) printfRect3(44,27,4,4,l[2],renderer);
+    if (x[1] == 0) printfRect3(36,5,12,4,l[5],renderer);
+    if (x[1] == 1) printfRect3(36,11,12,4,l[5],renderer);
+    if (x[1] == 2) printfRect3(36,16,12,4,l[5],renderer);
+    if (x[1] == 3) printfRect3(36,21,12,4,l[5],renderer);
+    if (y[0] == 0) printfRect3(9,27,4,4,l[3],renderer);
+    if (y[1] == 0) printfRect3(36,27,4,4,l[4],renderer);
+    if (y[0] == 1) printfRect3(17,27,4,4,l[3],renderer);
+    if (y[1] == 1) printfRect3(44,27,4,4,l[4],renderer);
 }
 
-void mx_checkPlayers(/*t_player *player, t_player *player2, *//*SDL_Window *window*/SDL_Renderer *renderer) {
-    /*SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 
-    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);*/
-    char *s[] = {"sprites/spaceStation_022.png", "sprites/spaceStation_018.png", "sprites/spaceStation_023.png", "sprites/spaceStation_019.png"};
-    char *l[] = {"sprites/environment_12.png", "imgs/1.png","imgs/0427.png_860.png"};
+ void mx_TTF(t_player *player1, t_player *player2, SDL_Renderer *renderer) {
+     if(TTF_Init()==-1) {
+        printf("TTF_Init: %s\n", TTF_GetError());
+        exit(2);
+    }
+    TTF_Font *font_Customize = TTF_OpenFont("ttf/ofont.ru_Fixedsys.ttf",72);
+    SDL_Color color = {0, 255, 0, 255};
+    drawText(color, SIZE_OF_SYMBOL * 11, SIZE_OF_SYMBOL * 1, player1->name, renderer, font_Customize);
+    color.r = 255;
+    drawText(color, SIZE_OF_SYMBOL * 38, SIZE_OF_SYMBOL * 1, player2->name, renderer, font_Customize);
+    void TTF_CloseFont(TTF_Font *font_Customize);
+    void TTF_Quit();
+ }
+
+void mx_TTF2(char *a, char *b, SDL_Renderer *renderer) {
+     if(TTF_Init()==-1) {
+        printf("TTF_Init: %s\n", TTF_GetError());
+        exit(2);
+    }
+    TTF_Font *font_Customize = TTF_OpenFont("ttf/ofont.ru_Fixedsys.ttf",72);
+    SDL_Color color = {0, 255, 0, 255};
+    drawText(color, SIZE_OF_SYMBOL * 11, SIZE_OF_SYMBOL * 36, a, renderer, font_Customize);
+    color.r = 255;
+    drawText(color, SIZE_OF_SYMBOL * 38, SIZE_OF_SYMBOL * 36, b, renderer, font_Customize);
+    void TTF_CloseFont(TTF_Font *font_Customize);
+    void TTF_Quit();
+ }
+
+void borders(char *a,char *d, int *running, int *b) {
+    SDL_Event Event;
+    while(SDL_PollEvent(&Event)){
+        if(Event.type == SDL_KEYDOWN) {
+            if (*b < 10) { 
+                if( (Event.key.keysym.sym>= SDLK_a ) && (Event.key.keysym.sym <= SDLK_z ) ){
+                    *a =  (char)(Event.key.keysym.sym - SDLK_a + 'a');
+                    *b = *b +1;
+                }
+            }
+            if (*b > 0) {
+                if (Event.key.keysym.sym == SDLK_BACKSPACE) {
+                    *d = '\0';
+                    *b = *b - 1;
+                }
+            }
+            if(Event.key.keysym.sym == SDLK_RETURN)  *running = *running -1;
+            if(Event.key.keysym.sym == SDLK_ESCAPE)  *running = 0;
+        
+    }
+    }
+}
+
+
+int mx_checkPlayers(t_player **player1, t_player **player2,SDL_Renderer *renderer) {
+    char *s[] = {"sprites/playerShip2_blue.png", "sprites/enemyBlue2.png", "sprites/playerShip1_red.png", "sprites/spaceship_red.png", "sprites/darkPurple.png"};
+    char *l[] = {"sprites/bull_red.png", "sprites/bull_blue2.png","sprites/ramka1.png", "sprites/ramka2.png","sprites/ramka3.png", "sprites/ramka4.png"};
     int x[] = {0, 0, -1};
     int y[] = {0, 0};
+    int b = 0;
+    char d[11] = "\0\0\0\0\0\0\0\0\0\0\0";
+    char e[11] = "\0\0\0\0\0\0\0\0\0\0\0";
     while(x[2] == -1) { 
         SDL_RenderClear(renderer);
         mx_print(l, s, x, y,renderer);
-        SDL_RenderPresent(renderer);   
+        mx_TTF(*player1, *player2, renderer);
+        mx_TTF2(d,e,renderer);
+        SDL_RenderPresent(renderer);  
+       // borders(d);
+
         keybords(&x[0], &x[1], &y[0], &y[1], &x[2]);
-    }
-    
-    //SDL_DestroyRenderer(renderer);
-    
+    }  
+     while(x[2] == 3) {
+        SDL_RenderClear(renderer);
+        mx_print(l, s, x, y,renderer);
+        mx_TTF(*player1, *player2, renderer);
+        mx_TTF2(d,e,renderer);
+        borders(&d[b],&d[b-1], &x[2],&b);
+        SDL_RenderPresent(renderer);  
+     }
+     b = 0; 
+     while(x[2] == 2) {
+        SDL_RenderClear(renderer);
+        mx_print(l, s, x, y,renderer);
+        mx_TTF(*player1, *player2, renderer);
+        mx_TTF2(d,e,renderer);
+        borders(&e[b],&e[b-1], &x[2],&b);
+        SDL_RenderPresent(renderer);  
+     }
+     
+    (*player1)->pathToTexture = s[x[0]];
+    (*player1)->pathToBullet = l[y[0]];
+    (*player2)->pathToTexture = s[x[1]];
+    (*player2)->pathToBullet = l[y[1]];
+    (*player1)->name = d;
+    (*player2)->name = e;
+    return x[2];
 }
