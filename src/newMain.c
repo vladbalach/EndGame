@@ -32,6 +32,9 @@ int main() {
      status = showStartMenu(renderer, player1, player2);
    if (status == 3)
     mx_checkPlayers(/*t_player *player, t_player *player2,*/renderer);
+    if(status == 4) {
+        scoreboard(renderer);
+    }
     if (status == 2) {
         while(status) {
             status = startHard(&player1, &player2, winPlayer, renderer);

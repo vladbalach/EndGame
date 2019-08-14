@@ -1,8 +1,5 @@
 #include "header.h"
 
-
-
-
 int showStartMenu(SDL_Renderer *renderer, t_player *player1, t_player *player2) {
     bool running = true;
     SDL_Event event;
@@ -130,8 +127,7 @@ int showStartMenu(SDL_Renderer *renderer, t_player *player1, t_player *player2) 
     Mix_FreeChunk(swap);
     Mix_CloseAudio();
     SDL_DestroyTexture(imgBackground);
-    SDL_DestroyRenderer(renderer);
-    //IMG_Quit();
+
     
     return 1;
 }

@@ -77,6 +77,7 @@ void drawText(SDL_Color color, int x, int y, char *text, SDL_Renderer *renderer,
 void initMap(char *mass);
 
 //SCREENS
+int scoreboard(SDL_Renderer *renderer);
 int showStartMenu(SDL_Renderer *renderer, t_player *player1, t_player *player2);
 void mx_checkPlayers(/*t_player *player, t_player *player2, *//*SDL_Window *window*/SDL_Renderer *renderer);
 int startHard(t_player **player1, t_player **player2, t_player *winPlayer, SDL_Renderer *renderer);
@@ -86,6 +87,8 @@ int endScreen(t_player *player, SDL_Renderer *renderer);
 void clearBulletList(t_bullet **list, char* MAP);
 t_bullet *createBullet(float x, float y, float dx, float dy, char ch, char *MAP);
 
+
+char *mx_strnew(const int size);
 void mx_push_front(t_bullet **list, float x, float y, float dx,float dy, char ch,  char *MAP);
 int moveBullet(t_bullet **bullet, char *MAP);
 void mx_pop_back(t_bullet **list);

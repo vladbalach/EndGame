@@ -84,6 +84,7 @@ void mx_checkPlayers(/*t_player *player, t_player *player2, *//*SDL_Window *wind
         SDL_RenderPresent(renderer);   
         keybords(&x[0], &x[1], &y[0], &y[1], &x[2]);
     }
+    
     //SDL_DestroyRenderer(renderer);
     
 }
