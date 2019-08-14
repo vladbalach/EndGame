@@ -30,7 +30,6 @@ int endScreen(t_player *player, SDL_Renderer *renderer) {
     SDL_Rect backgroundRect = {0, 0, WIDTH_PIX, HEIGHT_PIX};
     SDL_Texture *imgBackground = IMG_LoadTexture(renderer, "sprites/end_background.png");
 
-    
     while(running) {
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, imgBackground, NULL, &backgroundRect);
@@ -52,8 +51,7 @@ int endScreen(t_player *player, SDL_Renderer *renderer) {
                 if(event.key.keysym.sym == SDLK_RETURN) {
                     return indexActive;
                 }
-            }
-            
+            }  
         }
             if (indexActive == 5) {
                 SDL_RenderCopy(renderer, border11, NULL, &border1);

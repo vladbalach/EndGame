@@ -45,7 +45,7 @@ int showStartMenu(SDL_Renderer *renderer, t_player *player1, t_player *player2) 
               if (event.type == SDL_KEYUP) {
                 if(event.key.keysym.sym == SDLK_ESCAPE) {
                     Mix_PlayChannel(-1,swap, 0);
-                    running = false;
+                    return 0;
                 }
                 if(event.key.keysym.sym == SDLK_UP) {
                     Mix_PlayChannel(-1,swap, 0);
