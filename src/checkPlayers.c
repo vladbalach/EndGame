@@ -131,14 +131,14 @@ int mx_checkPlayers(t_player **player1, t_player **player2,SDL_Renderer *rendere
     char *l[] = {"sprites/bull_red.png", "sprites/bull_blue2.png","sprites/ramka1.png", "sprites/ramka2.png","sprites/ramka3.png", "sprites/ramka4.png"};
     int x[] = {0, 0, -1};
     int y[] = {0, 0};
-    int b = 0;
-    char d[11] = "\0\0\0\0\0\0\0\0\0\0\0";
-    char e[11] = "\0\0\0\0\0\0\0\0\0\0\0";
+    int b = 7;
+    char d[11] = "Player1\0\0\0\0";
+    char e[11] = "Player2\0\0\0\0";
     while(x[2] == -1) { 
         SDL_RenderClear(renderer);
         mx_print(l, s, x, y,renderer);
         mx_TTF(*player1, *player2, renderer);
-        mx_TTF2(d,e,renderer);
+       // mx_TTF2(d,e,renderer);
         SDL_RenderPresent(renderer);  
        // borders(d);
 
@@ -152,7 +152,7 @@ int mx_checkPlayers(t_player **player1, t_player **player2,SDL_Renderer *rendere
         borders(&d[b],&d[b-1], &x[2],&b);
         SDL_RenderPresent(renderer);  
      }
-     b = 0; 
+     b = 7; 
      while(x[2] == 2) {
         SDL_RenderClear(renderer);
         mx_print(l, s, x, y,renderer);
@@ -161,12 +161,15 @@ int mx_checkPlayers(t_player **player1, t_player **player2,SDL_Renderer *rendere
         borders(&e[b],&e[b-1], &x[2],&b);
         SDL_RenderPresent(renderer);  
      }
-     
+
+     char *o = strdup(d);
+     char *t = strdup(e);
+
     (*player1)->pathToTexture = s[x[0]];
     (*player1)->pathToBullet = l[y[0]];
     (*player2)->pathToTexture = s[x[1]];
     (*player2)->pathToBullet = l[y[1]];
-    (*player1)->name = d;
-    (*player2)->name = e;
+    (*player1)->name = o;
+    (*player2)->name = t;
     return x[2];
 }

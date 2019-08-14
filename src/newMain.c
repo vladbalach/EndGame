@@ -12,14 +12,16 @@ int main() {
     t_player *player2 = 0;
     t_player *winPlayer = 0;
     initPlayers(&player1, &player2);
-    while (status == 4) {
+    while (status != 0) {
         status = showStartMenu(renderer, player1, player2);
+        if (status == 3)
+    status = mx_checkPlayers(&player1, &player2, renderer);
         if(status == 4) {
             scoreboard(renderer);
         }
     }
    if (status == 3)
-    status = mx_checkPlayers(&player1, &player2,renderer);
+    status = mx_checkPlayers(&player1, &player2, renderer);
     if(status == 4) {
        scoreboard(renderer);
     }
