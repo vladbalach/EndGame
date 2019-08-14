@@ -25,6 +25,10 @@ void initPlayers(t_player **player1, t_player **player2) {
     players2->pathToBullet = "sprites/bull_blue2.png";
     players1->cloneX = players2->x + 1;
     players2->cloneX = players1->x + 1;
+    players2->name = (char*) malloc (100);
+    players1->name = (char*) malloc (100);
+    players1->name = "Player1";
+    players2->name = "Player2";
     *player1 = players1;
     *player2 = players2;
 }

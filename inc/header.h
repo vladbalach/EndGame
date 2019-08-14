@@ -31,6 +31,7 @@ typedef struct s_player {
     char chClone;
     float bulletSpeed; // Скорость снаряда
     int coolDown; //gthезарядка
+    char *name;
     char *pathToTexture;
     char *pathToBullet;
 } t_player;

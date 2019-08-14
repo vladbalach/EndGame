@@ -13,6 +13,7 @@ int endScreen(t_player *player, SDL_Renderer *renderer) {
           printf("%s",TTF_GetError());
           exit(1);
     };
+     SDL_Color color = {255, 255, 0, 255};
     //Border 1
     SDL_Rect border1 = {290, 795, 380, 127};
     SDL_Texture *border11 = IMG_LoadTexture(renderer, "sprites/ramka1.png");
@@ -36,6 +37,7 @@ int endScreen(t_player *player, SDL_Renderer *renderer) {
     SDL_RenderCopy(renderer, imgAgainBackground, NULL, &againBackground);
     SDL_RenderCopy(renderer, imgQuitBackground, NULL, &quitBackground);
         
+        drawText(color, 600, 100, player->name, renderer,font);
         while(SDL_PollEvent(&event)) {
             if (event.type == SDL_KEYUP) { 
                 if(event.key.keysym.sym == SDLK_ESCAPE) {

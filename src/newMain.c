@@ -38,7 +38,10 @@ int main() {
             if (status == 0) {
                 break;
             }
-            status = endScreen(winPlayer, renderer);
+            if (status == 1)
+                status = endScreen(player1, renderer);
+            if (status == 2)
+                status = endScreen(player2, renderer);
         }
     }
     if (status == 1) {
