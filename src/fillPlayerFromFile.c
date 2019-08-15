@@ -1,7 +1,7 @@
 #include "header.h"
 
 static void witePlayerToFile(t_player **player) {
-    int file = open("../scoreboard/scoreboard.txt", O_RDWR | O_APPEND, S_IRUSR | S_IWUSR | S_IXUSR);
+    int file = open("scoreboard/scoreboard.txt", O_RDWR | O_APPEND, S_IRUSR | S_IWUSR | S_IXUSR);
     int i=0;
     while((*player)->name[i]) {
         write(file, &((*player)->name[i]), 1);
@@ -12,13 +12,14 @@ static void witePlayerToFile(t_player **player) {
 }
 
 void fillplayerFromFile(t_player **player1, t_player **player2) {
-    int file = open("../scoreboard/scoreboard.txt", O_RDWR,  S_IRUSR | S_IWUSR | S_IXUSR);
+    int file = open("scoreboard/scoreboard.txt", O_RDWR,  S_IRUSR | S_IWUSR | S_IXUSR);
     if(file  < 0) return;
     int finded = 0;
     char ch = 0;
     int i=0;
     int status = 1;
     while(status) {
+        
         char *name = mx_strnew(100);
         char *games = mx_strnew(100);
         char *win = mx_strnew(100);
@@ -42,7 +43,9 @@ void fillplayerFromFile(t_player **player1, t_player **player2) {
                         i++;
                     }
                     (*player1)->win = atoi(win);
+                   
                 }
+                 
                 else if ((mx_strcmp((*player2)->name, name) == 0) && (finded != 2)){
                     finded += 2;
                     while(read(file, &ch, 1) && ch != ' ') {

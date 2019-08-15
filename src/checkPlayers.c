@@ -84,8 +84,8 @@ void mx_print(char **l,char**s,int *x, int *y, SDL_Renderer *renderer){
     drawText(color, SIZE_OF_SYMBOL * 11, SIZE_OF_SYMBOL * 1, player1->name, renderer, font_Customize);
     color.r = 255;
     drawText(color, SIZE_OF_SYMBOL * 38, SIZE_OF_SYMBOL * 1, player2->name, renderer, font_Customize);
-    void TTF_CloseFont(TTF_Font *font_Customize);
-    void TTF_Quit();
+    TTF_CloseFont(font_Customize);
+    TTF_Quit();
  }
 
 void mx_TTF2(char *a, char *b, SDL_Renderer *renderer) {
@@ -98,14 +98,14 @@ void mx_TTF2(char *a, char *b, SDL_Renderer *renderer) {
     drawText(color, SIZE_OF_SYMBOL * 11, SIZE_OF_SYMBOL * 36, a, renderer, font_Customize);
     color.r = 255;
     drawText(color, SIZE_OF_SYMBOL * 38, SIZE_OF_SYMBOL * 36, b, renderer, font_Customize);
-    void TTF_CloseFont(TTF_Font *font_Customize);
-    void TTF_Quit();
+    TTF_CloseFont(font_Customize);
+    TTF_Quit();
  }
 
 void borders(char *a,char *d, int *running, int *b) {
     SDL_Event Event;
     while(SDL_PollEvent(&Event)){
-        if(Event.type == SDL_KEYDOWN) {
+        if(Event.type == SDL_KEYUP) {
             if (*b < 10) { 
                 if( (Event.key.keysym.sym>= SDLK_a ) && (Event.key.keysym.sym <= SDLK_z ) ){
                     *a =  (char)(Event.key.keysym.sym - SDLK_a + 'a');
@@ -171,5 +171,5 @@ int mx_checkPlayers(t_player **player1, t_player **player2,SDL_Renderer *rendere
     (*player2)->pathToBullet = l[y[1]];
     (*player1)->name = o;
     (*player2)->name = t;
-    return x[2];
+    return 3;
 }

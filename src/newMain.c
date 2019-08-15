@@ -15,17 +15,16 @@ int main() {
     while (status == 4 || status == 3) {
         SDL_ShowCursor (0);
         status = showStartMenu(renderer);
-     //   if (status == 3)
-    //status = mx_checkPlayers(&player1, &player2, renderer);
+        if (status == 3)
+        status = mx_checkPlayers(&player1, &player2, renderer);
+
         if(status == 4) {
-            scoreboard(renderer);
+            status = scoreboard(renderer);
+            
         }
     }
-  /* if (status == 3)
-    status = mx_checkPlayers(&player1, &player2, renderer);
-    if(status == 4) {
-       scoreboard(renderer);
-    }*/
+    fillplayerFromFile(&player1, &player2);
+
     if (status == 2) {
         while(status) {
             status = startHard(&player1, &player2, winPlayer, renderer);
@@ -43,7 +42,7 @@ int main() {
             }
             if (status == 2) {
                 if (player1->health == 0) {
-                    status = endScreen(player1, renderer);
+                    status = endScreen(player2, renderer);
                     player1->health = 3;
                     player2->health = 3;
                 }
@@ -69,7 +68,7 @@ int main() {
             }
             if (status == 2) {
                 if (player1->health == 0) {
-                    status = endScreen(player1, renderer);
+                    status = endScreen(player2, renderer);
                     player1->health = 3;
                     player2->health = 3;
                 }
@@ -78,6 +77,8 @@ int main() {
             }
         }
     }
+    rewritePlayer(&player1);
+    rewritePlayer(&player2);
     SDL_DestroyWindow(window);
     IMG_Quit();
     SDL_Quit();

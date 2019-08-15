@@ -11,7 +11,7 @@ static char* formatedInt(int num) {
 }
 
 void rewritePlayer(t_player **player) {
-    int file = open("../scoreboard/scoreboard.txt", O_RDWR,  S_IRUSR | S_IWUSR | S_IXUSR);
+    int file = open("scoreboard/scoreboard.txt", O_RDWR,  S_IRUSR | S_IWUSR | S_IXUSR);
     if(file  < 0) 
     {
          printf("CantOpen!");

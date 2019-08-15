@@ -69,7 +69,8 @@ void drawMap( SDL_Renderer *render, char* MAP);
 void check_x(t_player *player, char* mass, int width);
 void check_y(t_player *player, char* mass, int width);
 void initPlayers(t_player **player1, t_player **player2);
-
+void fillplayerFromFile(t_player **player1, t_player **player2);
+void rewritePlayer(t_player **player);
 //GENERAL
 void drawText(SDL_Color color, int x, int y, char *text, SDL_Renderer *renderer, TTF_Font *font);
 int mx_strcmp(const char *s1, const char *s2);

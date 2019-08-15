@@ -67,17 +67,23 @@ CTMP = 	main.c \
 	mx_strcpy.c \
 	rewritePlayer.c
 
+DFLAGS = -fsanitize=address -g
+FFLAGS = -F ./Frameworks -framework SDL2 -rpath ./Frameworks \
+	 -F ./Frameworks -framework SDL2_image -rpath ./Frameworks \
+	 -F ./Frameworks -framework SDL2_ttf -rpath ./Frameworks \
+	 -F ./Frameworks -framework SDL2_mixer -rpath ./Frameworks
 CFLSGS = -std=c11 -Wall -Wextra -Wpedantic -Werror
 
 all: install uninstall
 
+debug:
+	@cp $(SRCS) .
+	@cp $(INC) .
+	@clang $(CFLSGS) $(FFLAGS) $(DFLAGS) -o $(NAME) $(CTMP)
 install:
 	@cp $(SRCS) .
 	@cp $(INC) .
-	@clang $(CFLSGS) -o $(NAME) $(CTMP)  -F ./Frameworks -framework SDL2 -rpath ./Frameworks \
-	 -F ./Frameworks -framework SDL2_image -rpath ./Frameworks \
-	 -F ./Frameworks -framework SDL2_ttf -rpath ./Frameworks \
-	 -F ./Frameworks -framework SDL2_mixer -rpath ./Frameworks
+	@clang $(CFLSGS) -o $(NAME) $(CTMP) $(FFLAGS)
 
 uninstall:
 	@rm -rf $(CTMP)
